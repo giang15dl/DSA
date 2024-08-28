@@ -4,93 +4,116 @@
 
 #include <stdio.h>
 
-#define MAX_N 1000
-#define MAX_M 20
+#define MAX_SIZE 1000
+extern void init(int N, int mPlane[MAX_SIZE][MAX_SIZE]);
+extern int getCount(int mPiece[5][5]);
+extern int getPosition(int mRow, int mCol);
 
-struct Result {
-	int y, x;
-};
+#define CMD_INIT 0
+#define CMD_CNT 1
+#define CMD_POSITION 2
 
-extern void init(int N, int M, int Map[MAXN][MAXN]);
-extern Result findConstellation(int stars[MAX_M][MAX_M]);
+static int Map[MAX_SIZE][MAX_SIZE];
+static int Piece[5][5];
+static int Data[40000];
 
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
+static void init_map(int N) {
+    int idx = 0;
 
-static int mSeed;
-static int pseudo_rand(void)
-{
-	mSeed = mSeed * 431345 + 2531999;
-	return mSeed & 0x7FFFFFFF;
+    int x = 0;
+    for (int i = 0; i < (N / 25); i++) {
+        for (int y = 0; y < N; y++) {
+            int data = Data[idx++];
+            int bit = 1;
+            for (int m = 0; m < 25; m++) {
+                if ((data & bit) != 0)
+                    Map[y][x + m] = 1;
+                else
+                    Map[y][x + m] = 0;
+                bit <<= 1;
+            }
+        }
+        x += 25;
+    }
+
+    int dcnt = N % 25;
+    if (dcnt != 0) {
+        for (int y = 0; y < N; y++) {
+            int data = Data[idx++];
+            int bit = 1;
+            for (int m = 0; m < dcnt; m++) {
+                if ((data & bit) != 0)
+                    Map[y][x + m] = 1;
+                else
+                    Map[y][x + m] = 0;
+                bit <<= 1;
+            }
+        }
+    }
 }
 
-static int Map[MAXN][MAXN];
-static int Stars[MAX_M][MAX_M];
-
-static int run(int Ans)
-{
-	int N, M, K;
-	scanf("%d %d %d", &N, &M, &K);
-
-	for (int i = 0; i < N; ++i) {
-		int num;
-		int cnt = N / 30;
-		int idx = 0;
-		for (int k = 0; k < cnt; ++k) {
-			scanf("%d", &num);
-			for (int m = 0; m < 30; ++m) {
-				Map[i][idx++] = num & 0x01;
-				num = num >> 1;
-			}
-		}
-
-		if (N % 30) {
-			scanf("%d", &num);
-			for (int m = 0; m < (N % 30); ++m) {
-				Map[i][idx++] = num & 0x01;
-				num = num >> 1;
-			}
-		}
-	}
-
-	init(N, M, Map);
-
-	for (int t = 0; t < K; ++t) {
-		int num, sy, sx;
-		scanf("%d %d %d %d", &mSeed, &num, &sy, &sx);
-
-		for (int i = 0; i < M; ++i)
-			for (int k = 0; k < M; ++k)
-				Stars[i][k] = 0;
-
-		int y = pseudo_rand() % M;
-		int x = pseudo_rand() % M;
-		Stars[y][x] = 9;
-		for (int i = 1; i < num; ++i) {
-			y = pseudo_rand() % M;
-			x = pseudo_rand() % M;
-			Stars[y][x] = 1;
-		}
-
-		Result answer = findConstellation(Stars);
-		if ((answer.y != sy) || (answer.x != sx))
-			Ans = 0;
-	}
-
-	return Ans;
+static void make_piece(int data) {
+    int bit = 1;
+    for (int i = 0; i < 5; i++) {
+        for (int k = 0; k < 5; k++) {
+            if ((data & bit) != 0)
+                Piece[i][k] = 1;
+            else
+                Piece[i][k] = 0;
+            bit <<= 1;
+        }
+    }
 }
 
-int main()
-{
-	setbuf(stdout, NULL);
-	freopen("sample_input_10.txt", "r", stdin);
+static bool run() {
+    int Q, N, row, col, cnt;
+    int ret, ans;
 
-	int T, Ans;
-	scanf("%d %d", &T, &Ans);
+    bool ok = false;
 
-	for (int tc = 1; tc <= T; tc++) {
-		printf("#%d %d\n", tc, run(Ans));
-	}
+    scanf("%d", &Q);
+    for (int q = 0; q < Q; q++) {
+        int cmd;
+        scanf("%d", &cmd);
+        if (cmd == CMD_INIT) {
+            scanf("%d %d", &N, &cnt);
+            for (int i = 0; i < cnt; i++)
+                scanf("%d", &Data[i]);
+            init_map(N);
+            init(N, Map);
+            ok = true;
+        } else if (cmd == CMD_CNT) {
+            scanf("%d", &Data[0]);
+            make_piece(Data[0]);
+            ret = getCount(Piece);
+            scanf("%d", &ans);
+            if (ans != ret) {
+                ok = false;
+            }
+        } else if (cmd == CMD_POSITION) {
+            scanf("%d %d", &row, &col);
+            ret = getPosition(row, col);
+            scanf("%d", &ans);
+            if (ans != ret) {
+                ok = false;
+            }
+        } else
+            ok = false;
+    }
+    return ok;
+}
 
-	return 0;
+int main() {
+    setbuf(stdout, NULL);
+    freopen("sample_input.txt", "r", stdin);
+
+    int T, MARK;
+    scanf("%d %d", &T, &MARK);
+
+    for (int tc = 1; tc <= T; tc++) {
+        int score = run() ? MARK : 0;
+        printf("#%d %d\n", tc, score);
+    }
+
+    return 0;
 }
