@@ -6,3 +6,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${OUTPUT_DIRECTORY}")
 
 add_subdirectory(Bacteria)
 add_subdirectory(Constellation_Search)
+add_subdirectory(Civilization)
