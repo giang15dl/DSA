@@ -1,18 +1,22 @@
-const int di[4] = {-1, 0, 1, 0};
-const int dj[4] = {1, 0, -1, 0};
+#include <unordered_map>
 
+const int di[4] = {-1, 0, 1, 0};
+const int dj[4] = {0, -1, 0, 1};
+
+using namespace std;
 class Solution {
     static const int MAX_N = 1000;
+
 private:
     int N;
     int map[MAX_N][MAX_N];
-public:
 
+public:
     // N: Length of a region (5 <= N <= 1,000)
     Solution(int N = 0) : N(N) {
-        //for (int i = 0; i < N; i++)
-        //    for (int j = 0; j < N; j++)
-        //        map[i][j] = 0;
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                map[i][j] = 0;
     }
 
     // Forms a civilization mID in Area (r, c)
@@ -24,11 +28,29 @@ public:
     // c: column of the Civilization location (1 <= c <= N)
     // mID: ID of the Civilization (1 <= mID <= 1,000,000,000)
     // return: The ID of the civilization that occupies Area (r, c)
+    // Called up to 60,000 times
     int newCivilization(int r, int c, int mID) {
-        //for (int d = 0; d < 4; d++) {
+        unordered_map<int, int> freq;
+        for (int d = 0; d < 4; d++) {
+            int nr = r + di[d];
+            int nc = c + dj[d];
+            if (nr >= 0 && nc >= 0 && nr < N && nc < N && map[nr][nc])
+                freq[map[nr][nc]]++;
+        }
+        int max = 1;
+        int minID = 1000000000;
+        for (const auto &pair : freq) {
+            if (pair.second > max || pair.second == max && pair.first < minID)
+                max = pair.second, minID = pair.first;
+        }
 
-        //}
-        return -1;
+        if (minID != 1000000000) {
+            map[r][c] = minID;
+            return minID;
+        } else {
+            map[r][c] = mID;
+            return mID;
+        }
     }
 
     // Removes the Civilization mID.
@@ -37,8 +59,19 @@ public:
     // mID: ID of the Civilization to remove (1 <= mID <= 1,000,000,000)
     // return: The number of areas Civilization mID owned before disappearing.
     // Return 0 if Civilization mID is a civilization that does not exist or already disappeared.
+    // Called up to 3,000 times
     int removeCivilization(int mID) {
-        return -1;
+        int count = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (map[i][j] == mID) {
+                    count++;
+                    map[i][j] = 0;
+                }
+            }
+        }
+
+        return count;
     }
 
     // Get ID of the Civilization that occupyting Area(r, c)
@@ -47,8 +80,9 @@ public:
     // c: column of the Civilization location (1 <= c <= N)
     // return: the ID of the civilization occupying Area (r, c).
     // If there is no civilization in the location, return 0.
+    // Called up to 10,000 times
     int getCivilization(int r, int c) {
-        return -1;
+        return map[r][c];
     }
 
     // Get the number of areas Civilization mID is occupying
@@ -57,7 +91,16 @@ public:
     // return: the number of areas Civilization mID is occupying.
     // If the civilization does not exist, return 0.
     int getCivilizationArea(int mID) {
-        return -1;
+        int count = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (map[i][j] == mID) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
     // Merges Civilization mID2 into Civilization mID1
@@ -65,32 +108,49 @@ public:
     // mID1: The ID of civilization which is left after the merger (1 <= mID1 <= 1,000,000,000)0
     // mID2: The ID of civilization which disappeared after the merger (1 <= mID2 <= 1,000,000,000, mID1 \neq mID2)
     // return: The number of areas Civilization mID1 is occupying after the merger.
+    // Called up to 30,000 times
     int mergeCivilization(int mID1, int mID2) {
-        return -1;
+        int count = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (map[i][j] == mID1) {
+                    count++;
+                } else if (map[i][j] == mID2) {
+                    map[i][j] = mID1;
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
-} solution;
+} *solution;
 
 ////////////////////////////////////////////////////////////////////////////////
 void init(int N) {
-    solution = Solution(N);
+    solution = new Solution(N);
 }
 
 int newCivilization(int r, int c, int mID) {
-    return solution.newCivilization(r, c, mID);
+    r--;
+    c--;
+    return solution->newCivilization(r, c, mID);
 }
 
 int removeCivilization(int mID) {
-    return solution.removeCivilization(mID);
+    return solution->removeCivilization(mID);
 }
 
 int getCivilization(int r, int c) {
-    return solution.getCivilization(r, c);
+    r--;
+    c--;
+    return solution->getCivilization(r, c);
 }
 
 int getCivilizationArea(int mID) {
-    return solution.getCivilizationArea(mID);
+    return solution->getCivilizationArea(mID);
 }
 
 int mergeCivilization(int mID1, int mID2) {
-    return solution.mergeCivilization(mID1, mID2);
+    return solution->mergeCivilization(mID1, mID2);
 }
