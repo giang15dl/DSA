@@ -14,6 +14,11 @@ private:
         int ci = MAXN;
         int cj = MAXN;
         int count = 0;
+
+        int centralValue() const {
+            return ci * 10000 + cj;
+        }
+
     } tiles[(MAXN * MAXN) / SIZE * SIZE];
 
     int tileCount = 0;
@@ -49,7 +54,7 @@ private:
             }
         }
 
-        auto it = hashID.find(num[0]); 
+        auto it = hashID.find(num[0]);
         if (it != hashID.end())
             return it->second;
 
@@ -137,9 +142,9 @@ public:
 
     int getPosition(int mRow, int mCol) {
         int id = used[mRow][mCol];
-        return tiles[id].ci * 10000 + tiles[id].cj;
+        return tiles[id].centralValue();
     }
-} *solution;
+} * solution;
 
 ////////////////////////////////////////////////////////////////////////////////
 void init(int N, int mPlane[MAXN][MAXN]) { if (solution) delete solution; solution = new Solution(N, mPlane); }
