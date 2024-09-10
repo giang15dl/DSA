@@ -1,3 +1,5 @@
+#include <climits>
+#include <list>
 #include <unordered_map>
 
 const int di[4] = {-1, 0, 1, 0};
@@ -6,14 +8,34 @@ const int dj[4] = {0, -1, 0, 1};
 using namespace std;
 class Solution {
     static const int MAX_N = 1000;
+    static const int MAX_CALL = 60000;
 
 private:
     int N;
-    int map[MAX_N][MAX_N] = {};
+    int map[MAX_N + 1][MAX_N + 1] = {};
+    int genID = 1;
+
+    struct Data {
+        int mID;
+        bool deleted = false;
+        Data(int ID = 0) : mID(ID) {}
+    };
+
+    int parent[MAX_CALL] = {};
+    int counts[MAX_CALL] = {};
+    Data datas[MAX_CALL];
+    unordered_map<int, int> hash;
+
+    int getRoot(int x) {
+        return parent[x] < 0 ? x : (parent[x] = getRoot(parent[x]));
+    }
 
 public:
     // N: Length of a region (5 <= N <= 1,000)
-    Solution(int N = 0) : N(N) {}
+    Solution(int N = 0) : N(N) {
+        for (int i = 0; i < MAX_CALL; i++)
+            parent[i] = -1;
+    }
 
     // Forms a civilization mID in Area (r, c)
     // - Civilization mID might have existed and disappeared before the function call.
@@ -26,27 +48,43 @@ public:
     // return: The ID of the civilization that occupies Area (r, c)
     // Called up to 60,000 times
     int newCivilization(int r, int c, int mID) {
-        unordered_map<int, int> freq;
+        list<int> saved;
+        int maxCount = 0;
+        int found = INT_MAX;
         for (int d = 0; d < 4; d++) {
             int nr = r + di[d];
             int nc = c + dj[d];
-            if (nr >= 0 && nc >= 0 && nr < N && nc < N && map[nr][nc])
-                freq[map[nr][nc]]++;
-        }
-        int max = 1;
-        int minID = 1000000000;
-        for (const auto &pair : freq) {
-            if (pair.second > max || pair.second == max && pair.first < minID)
-                max = pair.second, minID = pair.first;
+            if (nr >= 1 && nr <= N && nc >= 1 && nc <= N && map[nr][nc]) {
+                int current = map[nr][nc];
+                int root = getRoot(current);
+                Data data = datas[root];
+                if (data.deleted)
+                    continue;
+
+                int count = counts[root];
+                if (count == 0)
+                    saved.push_back(root);
+
+                counts[root] = ++count;
+
+                if (count > maxCount || (count == maxCount && data.mID < datas[found].mID))
+                    maxCount = count, found = root;
+            }
         }
 
-        if (minID != 1000000000) {
-            map[r][c] = minID;
-            return minID;
+        if (found != INT_MAX) {
+            parent[found]--;
         } else {
-            map[r][c] = mID;
-            return mID;
+            found = genID++;
+            hash[mID] = found;
+            datas[found] = Data(mID);
         }
+
+        for (int x : saved)
+            counts[x] = 0;
+
+        map[r][c] = found;
+        return datas[found].mID;
     }
 
     // Removes the Civilization mID.
@@ -57,17 +95,17 @@ public:
     // Return 0 if Civilization mID is a civilization that does not exist or already disappeared.
     // Called up to 3,000 times
     int removeCivilization(int mID) {
-        int count = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (map[i][j] == mID) {
-                    count++;
-                    map[i][j] = 0;
-                }
-            }
-        }
+        int id = hash[mID];
+        hash.erase(mID);
 
-        return count;
+        if (id == 0)
+            return 0;
+
+        if (datas[id].deleted)
+            return 0;
+
+        datas[id].deleted = true;
+        return -parent[id];
     }
 
     // Get ID of the Civilization that occupyting Area(r, c)
@@ -78,7 +116,8 @@ public:
     // If there is no civilization in the location, return 0.
     // Called up to 10,000 times
     int getCivilization(int r, int c) {
-        return map[r][c];
+        Data data = datas[getRoot(map[r][c])];
+        return data.deleted ? 0 : data.mID;
     }
 
     // Get the number of areas Civilization mID is occupying
@@ -87,16 +126,11 @@ public:
     // return: the number of areas Civilization mID is occupying.
     // If the civilization does not exist, return 0.
     int getCivilizationArea(int mID) {
-        int count = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (map[i][j] == mID) {
-                    count++;
-                }
-            }
-        }
+        int id = hash[mID];
+        if (id == 0)
+            return 0;
 
-        return count;
+        return datas[id].deleted ? 0 : -parent[id];
     }
 
     // Merges Civilization mID2 into Civilization mID1
@@ -106,21 +140,14 @@ public:
     // return: The number of areas Civilization mID1 is occupying after the merger.
     // Called up to 30,000 times
     int mergeCivilization(int mID1, int mID2) {
-        int count = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (map[i][j] == mID1) {
-                    count++;
-                } else if (map[i][j] == mID2) {
-                    map[i][j] = mID1;
-                    count++;
-                }
-            }
-        }
-
-        return count;
+        int id1 = getRoot(hash[mID1]);
+        int id2 = getRoot(hash[mID2]);
+        parent[id1] += parent[id2];
+        parent[id2] = id1;
+        removeCivilization(datas[id2].mID);
+        return -parent[id1];
     }
-} *solution;
+} * solution;
 
 ////////////////////////////////////////////////////////////////////////////////
 void init(int N) {
@@ -128,8 +155,6 @@ void init(int N) {
 }
 
 int newCivilization(int r, int c, int mID) {
-    r--;
-    c--;
     return solution->newCivilization(r, c, mID);
 }
 
@@ -138,8 +163,6 @@ int removeCivilization(int mID) {
 }
 
 int getCivilization(int r, int c) {
-    r--;
-    c--;
     return solution->getCivilization(r, c);
 }
 
