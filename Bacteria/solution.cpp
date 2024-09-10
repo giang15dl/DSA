@@ -28,13 +28,13 @@ private:
     int batchCount;
 
     struct HeapCompare {
-        bool operator()(Batch *a, Batch *b) {
+        bool operator()(Batch *a, Batch *b) const {
             return a->nextHalfTime > b->nextHalfTime;
         }
     };
 
     struct TreeCompare {
-        bool operator()(Batch *a, Batch *b) {
+        bool operator()(Batch *a, Batch *b) const {
             return (a->life != b->life) ? a->life < b->life : a->id < b->id;
         }
     };
