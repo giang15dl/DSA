@@ -9,15 +9,11 @@ class Solution {
 
 private:
     int N;
-    int map[MAX_N][MAX_N];
+    int map[MAX_N][MAX_N] = {};
 
 public:
     // N: Length of a region (5 <= N <= 1,000)
-    Solution(int N = 0) : N(N) {
-        for (int i = 0; i < N; i++)
-            for (int j = 0; j < N; j++)
-                map[i][j] = 0;
-    }
+    Solution(int N = 0) : N(N) {}
 
     // Forms a civilization mID in Area (r, c)
     // - Civilization mID might have existed and disappeared before the function call.
