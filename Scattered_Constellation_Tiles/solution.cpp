@@ -18,7 +18,7 @@ private:
 
     int tileCount = 0;
 
-    unordered_map<int, int> tileIDs;
+    unordered_map<int, int> hashID;
 
     bool checkStar(int i, int j) {
         if (i < 0 || N <= i + 4 || j < 0 || N <= j + 4)
@@ -49,14 +49,14 @@ private:
             }
         }
 
-        auto it = tileIDs.find(num[0]);
-        if (it != tileIDs.end())
+        auto it = hashID.find(num[0]); 
+        if (it != hashID.end())
             return it->second;
 
         int id = tileCount++;
 
         for (int i = 0; i < 4; i++)
-            tileIDs[num[i]] = id;
+            hashID[num[i]] = id;
 
         return id;
     }
@@ -126,8 +126,8 @@ public:
             }
         }
 
-        auto it = tileIDs.find(num);
-        if (it == tileIDs.end())
+        auto it = hashID.find(num);
+        if (it == hashID.end())
             return 0;
 
         int id = it->second;
