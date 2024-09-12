@@ -7,7 +7,6 @@ struct Result {
 };
 
 class Solution {
-
 private:
     int N, M;
     int (*map)[MAX_N] = {};
@@ -22,14 +21,14 @@ private:
     } stars[MAX_STARS];
     int starCount = 0;
 
-    bool find(int constCount, Star constStars[MAX_M], Result &result) {
+    bool find(int constellationCount, Star constellation[MAX_M], Result &result) {
         bool found = 0;
         int i;
         for (i = 0; i < starCount; ++i) {
             found = 1;
-            for (int j = 0; j < constCount; ++j) {
-                int Y = constStars[j].y + stars[i].y;
-                int X = constStars[j].x + stars[i].x;
+            for (int j = 0; j < constellationCount; ++j) {
+                int Y = constellation[j].y + stars[i].y;
+                int X = constellation[j].x + stars[i].x;
                 if (Y < 0 || Y >= N || X < 0 || X >= N || map[Y][X] != 1) {
                     found = 0;
                     break;
@@ -45,12 +44,12 @@ private:
         return found;
     }
 
-    void rotate(int constCount, Star constStars[MAX_M]) {
-        for (int i = 0; i < constCount; ++i) {
-            int ny = -constStars[i].x;
-            int nx = constStars[i].y;
-            constStars[i].y = ny;
-            constStars[i].x = nx;
+    void rotate(int constellationCount, Star constellation[MAX_M]) {
+        for (int i = 0; i < constellationCount; ++i) {
+            int ny = -constellation[i].x;
+            int nx = constellation[i].y;
+            constellation[i].y = ny;
+            constellation[i].x = nx;
         }
     }
 
@@ -65,28 +64,29 @@ public:
 
     Result findConstellation(int stars[MAX_M][MAX_M]) {
         Star reference;
-        Star constStars[MAX_M];
-        int constCount = 0;
+        Star constellation[MAX_M];
+        int constellationCount = 0;
         for (int i = 0; i < M; ++i) {
             for (int j = 0; j < M; ++j) {
                 if (stars[i][j] == 1)
-                    constStars[constCount++] = Star(i, j);
+                    constellation[constellationCount++] = Star(i, j);
                 else if (stars[i][j] == 9)
                     reference = Star(i, j);
             }
         }
 
-        for (int i = 0; i < constCount; ++i)
-            constStars[i] -= reference;
+        for (int i = 0; i < constellationCount; ++i)
+            constellation[i] -= reference;
 
         Result result;
-        if (!find(constCount, constStars, result)) {
-            rotate(constCount, constStars);
-            if (!find(constCount, constStars, result)) {
-                rotate(constCount, constStars);
-                if (!find(constCount, constStars, result)) {
-                    rotate(constCount, constStars);
-                    find(constCount, constStars, result);
+        if (!find(constellationCount, constellation, result)) {
+            rotate(constellationCount, constellation);
+            if (!find(constellationCount, constellation, result)) {
+                rotate(constellationCount, constellation);
+                if (!find(constellationCount, constellation, result)) {
+                    rotate(constellationCount, constellation);
+                    if (!find(constellationCount, constellation, result))
+                        return Result();
                 }
             }
         }
