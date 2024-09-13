@@ -77,7 +77,6 @@ private:
     Bacteria getBacteria(char name[]) {
         int id = getBacteriaID(name);
         return bacterias[id];
-        ;
     }
 
 public:
@@ -139,20 +138,8 @@ public:
     }
 } solution;
 
-///////////////////////////////////////////////////////////////////////////////
-
-void init(int N, char bNameList[MAX_BACTERIA][MAX_NAME], int mHalfTime[MAX_BACTERIA]) {
-    solution = Solution(N, bNameList, mHalfTime);
-}
-
-void addBacteria(int tStamp, char bName[MAX_NAME], int mLife, int mCnt) {
-    solution.addBacteria(tStamp, bName, mLife, mCnt);
-}
-
-int takeOut(int tStamp, int mCnt) {
-    return solution.takeOut(tStamp, mCnt);
-}
-
-int checkBacteria(int tStamp, char bName[MAX_NAME]) {
-    return solution.checkBacteria(tStamp, bName);
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void init(int N, char bNameList[MAX_BACTERIA][MAX_NAME], int mHalfTime[MAX_BACTERIA]) { solution = Solution(N, bNameList, mHalfTime); }
+void addBacteria(int tStamp, char bName[MAX_NAME], int mLife, int mCnt) { solution.addBacteria(tStamp, bName, mLife, mCnt); }
+int takeOut(int tStamp, int mCnt) { return solution.takeOut(tStamp, mCnt); }
+int checkBacteria(int tStamp, char bName[MAX_NAME]) { return solution.checkBacteria(tStamp, bName); }
