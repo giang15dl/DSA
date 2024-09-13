@@ -24,8 +24,10 @@ private:
         int count;
         int life;
         Bacteria *bacteria;
+        Batch() {}
+        Batch(int nextHalfTime, int id, int count, int life) {}
     } batches[MAX_BATCH];
-    int batchCount;
+    int batchCount = 0;
 
     struct HeapCompare {
         bool operator()(Batch *a, Batch *b) const {
@@ -83,11 +85,9 @@ public:
     Solution() {}
 
     Solution(int N, char bNameList[MAX_BACTERIA][MAX_NAME], int mHalfTime[MAX_BACTERIA]) {
-        batchCount = 0;
         for (int i = 0; i < N; i++) {
             hash[bNameList[i]] = i;
-            Bacteria *bacteria = &bacterias[i];
-            bacteria->halfTime = mHalfTime[i];
+            bacterias[i] = Bacteria(mHalfTime[i]);
         }
     }
 
