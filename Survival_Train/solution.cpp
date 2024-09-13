@@ -37,6 +37,7 @@ private:
     vector<Passenger *> jobs[MAX_JOB];
     set<Passenger *, Comparator> cars[MAX_CAR]; // A car is a section of a train.
     int carCount;
+    set<Passenger *, Comparator>::iterator its[MAX_N];
 
 public:
     Solution() {}
@@ -45,7 +46,7 @@ public:
         for (int i = 0; i < N; i++) {
             int sectionID = i / M;
             passengers[i] = Passenger(i, JobID[i], sectionID, Point[i]);
-            cars[sectionID].insert(&passengers[i]);
+            its[i] = cars[sectionID].insert(&passengers[i]).first;
             jobs[mJobID[i]].push_back(&passengers[i]);
         }
     }
@@ -55,11 +56,9 @@ public:
     int update(int mID, int mPoint) {
         Passenger *passenger = &passengers[mID];
         auto &car = cars[passenger->car];
-        auto search = car.find(passenger);
         passenger->point += mPoint;
-        car.erase(search);
-        car.insert(passenger);
-
+        car.erase(its[mID]);
+        its[mID] = car.insert(passenger).first;
         return passenger->point;
     }
 
@@ -67,10 +66,9 @@ public:
         int sum = 0;
         for (Passenger *passenger : jobs[mJobID]) {
             auto &car = cars[passenger->car];
-            auto search = car.find(passenger);
             passenger->point += mPoint;
-            car.erase(search);
-            car.insert(passenger);
+            car.erase(its[passenger->ID]);
+            its[passenger->ID] = car.insert(passenger).first;
             sum += passenger->point;
         }
         return sum;
@@ -105,9 +103,9 @@ public:
             auto &front = cars[i];
             auto &back = cars[i + 1];
             for (int j = 0; j < mNum; j++) {
-                front.insert(moveUpPassengers[j][i]);
+                its[moveUpPassengers[j][i]->ID] = front.insert(moveUpPassengers[j][i]).first;
                 moveUpPassengers[j][i]->car = i;
-                back.insert(moveDownPassengers[j][i]);
+                its[moveDownPassengers[j][i]->ID] = back.insert(moveDownPassengers[j][i]).first;
                 moveDownPassengers[j][i]->car = i + 1;
             }
         }
