@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(Pro)
 
+# Generate Clangd compile_commands.json
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${OUTPUT_DIRECTORY}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${OUTPUT_DIRECTORY}")
 

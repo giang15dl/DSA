@@ -1,4 +1,5 @@
 build/
+.cache/
 *.pdf
 *.pptx
 **/temp.cpp
