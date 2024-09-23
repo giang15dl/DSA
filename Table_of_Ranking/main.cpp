@@ -27,10 +27,9 @@ extern Result getRank(char mPlayerName[]);
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 
-static int run(int tc_result)
-{
+static int run(int tc_result) {
     int N;
-    scanf("%d",&N);
+    scanf("%d", &N);
     init();
 
     for (int i = 0; i < N; ++i) {
@@ -41,7 +40,7 @@ static int run(int tc_result)
         int current_rank_ans, best_rank_ans, worst_rank_ans;
         Result res;
 
-        scanf("%d",&cmd);
+        scanf("%d", &cmd);
         switch (cmd) {
         case NEW_PLAYER:
             scanf("%s", mPlayerName);
@@ -63,11 +62,11 @@ static int run(int tc_result)
             scanf("%s", mPlayerName);
             res = getRank(mPlayerName);
             scanf("%d %d %d", &current_rank_ans, &best_rank_ans, &worst_rank_ans);
-            if ( !(res.current_rank == current_rank_ans && res.best_rank == best_rank_ans && res.worst_rank == worst_rank_ans) ) {
+            if (!(res.current_rank == current_rank_ans && res.best_rank == best_rank_ans && res.worst_rank == worst_rank_ans)) {
                 tc_result = 0;
             }
             break;
-        }        
+        }
     }
 
     destroy();
@@ -77,11 +76,11 @@ static int run(int tc_result)
 
 int main() {
     setbuf(stdout, NULL);
-    freopen("sample_input.txt", "r", stdin); 
+    freopen("sample_input.txt", "r", stdin);
 
     int T, score;
     scanf("%d %d", &T, &score);
-    for(int tc = 1; tc <= T; tc++) {
+    for (int tc = 1; tc <= T; tc++) {
         printf("#%d %d\n", tc, run(score));
     }
 

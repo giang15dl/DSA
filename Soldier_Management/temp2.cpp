@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 using namespace std;
 
 class Solution {
@@ -9,6 +9,7 @@ private:
         static unordered_map<int, int> hashID;
         static unordered_map<int, vector<int>> hashTeam;
         static int count;
+
     public:
         int id, team;
         short score;
@@ -86,7 +87,7 @@ public:
         }
         return maxID;
     }
-} *solution;
+} * solution;
 
 unordered_map<int, int> Solution::Soldier::hashID;
 unordered_map<int, vector<int>> Solution::Soldier::hashTeam;
@@ -94,7 +95,8 @@ int Solution::Soldier::count;
 
 ///////////////////////////////////////////////////////////////////////////////
 void init() {
-    if (solution) delete solution;
+    if (solution)
+        delete solution;
     solution = new Solution();
 }
 

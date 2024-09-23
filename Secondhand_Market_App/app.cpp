@@ -1,10 +1,10 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <climits>
-#include <list>
-#include <unordered_map>
 #include <algorithm>
+#include <climits>
+#include <iostream>
+#include <list>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -13,8 +13,8 @@ private:
     static const int MAX_PRODUCTS = 30000;
     static const int MAX_TAGS = 30;
     static const int MAX_LEN = 9; // Maximum length of a tag name
-    int N; // The number of tags available on the app
-    int P; // The number of products available on the app
+    int N;                        // The number of tags available on the app
+    int P;                        // The number of products available on the app
     int T;
     struct Product {
         int price;
@@ -68,14 +68,13 @@ private:
         return it->second;
     }
 
-
 public:
     App() : N() {}
 
     App(int N) : N(N) {}
 
     void addProduct(int mPrice, int tagNum, char tagName[][10]) {
-        vector <int> tagID(tagNum);
+        vector<int> tagID(tagNum);
         for (int i = 0; i < tagNum; i++)
             tagID[i] = getTagID(tagName[i], i);
 
@@ -100,11 +99,11 @@ public:
     }
 
     void adjustPrice(char tag1[], int changePrice) {
-        for(auto &product : products)
+        for (auto &product : products)
             if (product.contains(tag1))
                 product.price += changePrice;
     }
-}app;
+} app;
 
 ///////////////////////////////////////////////////////////////////////////////
 

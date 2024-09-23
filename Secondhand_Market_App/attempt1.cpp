@@ -1,7 +1,7 @@
+#include <climits>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <climits>
 
 using namespace std;
 
@@ -10,22 +10,23 @@ private:
     static const int MAX_PRODUCTS = 30000;
     static const int MAX_TAGS = 30;
     static const int MAX_LEN = 9; // Maximum length of a tag name
-    int N;      // The number of tags available on the app
-    int cnt;    // Count number of products added to the app
+    int N;                        // The number of tags available on the app
+    int cnt;                      // Count number of products added to the app
     struct Product {
         int price;
         bool bought;
         vector<string> tags;
         Product();
-        bool contains(char []) const;
-        bool contains(char [], char [], char []) const;
-    }products[MAX_PRODUCTS];
+        bool contains(char[]) const;
+        bool contains(char[], char[], char[]) const;
+    } products[MAX_PRODUCTS];
+
 public:
     App(int N);
-    void addProduct(int, int, char [][10]);
-    int buyProduct(char [], char [], char []);
-    void adjustPrice(char [], int);
-}*app;
+    void addProduct(int, int, char[][10]);
+    int buyProduct(char[], char[], char[]);
+    void adjustPrice(char[], int);
+} * app;
 
 /*****************************************************************************/
 void init(int N) {

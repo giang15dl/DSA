@@ -1,8 +1,8 @@
+#include <climits>
 #include <iostream>
+#include <list>
 #include <string>
 #include <vector>
-#include <climits>
-#include <list>
 
 using namespace std;
 
@@ -11,23 +11,23 @@ private:
     static const int MAX_PRODUCTS = 30000;
     static const int MAX_TAGS = 30;
     static const int MAX_LEN = 9; // Maximum length of a tag name
-    int N; // The number of tags available on the app
+    int N;                        // The number of tags available on the app
     struct Product {
         int price;
         vector<string> tags;
         Product();
-        Product(int, int, char [][10]);
-        bool contains(char []) const;
-        bool contains(char [], char [], char []) const;
+        Product(int, int, char[][10]);
+        bool contains(char[]) const;
+        bool contains(char[], char[], char[]) const;
     };
 
     std::list<Product> products;
 
 public:
     App(int N);
-    void addProduct(int, int, char [][10]);
-    int buyProduct(char [], char [], char []);
-    void adjustPrice(char [], int);
+    void addProduct(int, int, char[][10]);
+    int buyProduct(char[], char[], char[]);
+    void adjustPrice(char[], int);
 };
 
 /*****************************************************************************/
@@ -108,7 +108,7 @@ int App::buyProduct(char tag1[], char tag2[], char tag3[]) {
 }
 
 void App::adjustPrice(char tag1[], int changePrice) {
-    for(Product &product : products)
+    for (Product &product : products)
         if (product.contains(tag1))
             product.price += changePrice;
 }

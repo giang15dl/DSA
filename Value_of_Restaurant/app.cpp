@@ -1,9 +1,9 @@
-#include <string>
-#include <queue>
-#include <vector>
 #include <algorithm>
 #include <functional>
+#include <queue>
+#include <string>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -20,8 +20,8 @@ private:
         string name;
         int value;
         int cityID;
-        Restaurant () : name(), value(0), cityID(0) {}
-        Restaurant (int cityID, char name[]) : name(name), value(0), cityID(cityID) {}
+        Restaurant() : name(), value(0), cityID(0) {}
+        Restaurant(int cityID, char name[]) : name(name), value(0), cityID(cityID) {}
         bool has(char mStr[]) const {
             string subStr = mStr;
             if (name.find(subStr) != std::string::npos)
@@ -138,7 +138,7 @@ public:
         return topVal[0] + topVal[1] + topVal[2];
     }
 
-}solution;
+} solution;
 
 ///////////////////////////////////////////////////////////////////////////////
 void init(int N, int M, int mRoads[][2]) {

@@ -111,7 +111,7 @@ public:
 
         return sum;
     }
-} *solution;
+} * solution;
 
 ///////////////////////////////////////////////////////////////////////////////
 void init(int N, int M, int J, int mPoint[], int mJobID[]) { solution = new Solution(N, M, J, mPoint, mJobID); }

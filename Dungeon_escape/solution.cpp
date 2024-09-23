@@ -9,7 +9,7 @@ const int dj[4] = {0, 1, 0, -1};
 using namespace std;
 class Solution {
 private:
-    int N; // Map Size
+    int N;       // Map Size
     int Stamina; // Max Stamina
     int (*map)[MAX_N];
 
@@ -24,7 +24,7 @@ private:
     };
 
     struct Gate {
-        vector<Gate*> neighbors;
+        vector<Gate *> neighbors;
         vector<int> distances;
         bool removed;
         int heapIndex;
@@ -160,7 +160,7 @@ public:
         }
         return -1;
     }
-} *solution;
+} * solution;
 
 ////////////////////////////////////////////////////////////////////////////////
 void init(int N, int mMaxStamina, int mMap[MAX_N][MAX_N]) {

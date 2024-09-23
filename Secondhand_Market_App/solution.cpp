@@ -1,10 +1,10 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <climits>
-#include <unordered_map>
 #include <algorithm>
+#include <climits>
+#include <iostream>
 #include <list>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -30,29 +30,29 @@ private:
     unordered_map<string, vector<int>> hash3tag;
 
     int hashCode(int a, int b, int c) {
-        return a + b*N + c*N*N;
+        return a + b * N + c * N * N;
     }
 
-    int hashCode(vector <int> id) {
+    int hashCode(vector<int> id) {
         return hashCode(id[0], id[1], id[2]);
     }
 
 public:
     Solution(int N = 0) : N(N), P(0) {}
 
-    void addProduct(int mPrice, int tagNum, char tagName[][10]){
+    void addProduct(int mPrice, int tagNum, char tagName[][10]) {
         products.push_back(Product(mPrice));
         vector<string> tags(tagNum);
-        for(int i = 0; i < tagNum; i++) {
+        for (int i = 0; i < tagNum; i++) {
             tags[i] = tagName[i];
             hash1tag[tags[i]].push_back(P);
         }
 
         sort(tags.begin(), tags.end());
 
-        for(int i = 0; i < tagNum; i++) {
-            for(int j = i + 1; j < tagNum; j++) {
-                for(int k = j + 1; k < tagNum; k++){
+        for (int i = 0; i < tagNum; i++) {
+            for (int j = i + 1; j < tagNum; j++) {
+                for (int k = j + 1; k < tagNum; k++) {
                     string str = tags[i] + tags[j] + tags[k];
                     hash3tag[str].push_back(P);
                 }
@@ -61,7 +61,7 @@ public:
         P++;
     }
 
-    int buyProduct(char tag1[], char tag2[], char tag3[]){
+    int buyProduct(char tag1[], char tag2[], char tag3[]) {
         vector<string> tag(3);
         tag[0] = tag1;
         tag[1] = tag2;
@@ -86,11 +86,11 @@ public:
         return -1;
     }
 
-    void adjustPrice(char tag1[], int changePrice){
-        for(auto id : hash1tag[tag1])
+    void adjustPrice(char tag1[], int changePrice) {
+        for (auto id : hash1tag[tag1])
             products[id].price += changePrice;
     }
-}solution;
+} solution;
 
 ///////////////////////////////////////////////////////////////////////////////
 void init(int N) {

@@ -10,23 +10,23 @@ private:
         int addr;
         int size;
         bool free;
-        Node* left;
-        Node* right;
-        Node* prev;
-        Node* next;
+        Node *left;
+        Node *right;
+        Node *prev;
+        Node *next;
         Node() : addr(0), size(0), free(true), left(NULL), right(NULL), prev(NULL), next(NULL) {}
         Node(int N) : addr(0), size(N), free(true), left(NULL), right(NULL), prev(NULL), next(NULL) {}
 
-    }*ListHead, *TreeRoot, NodePool[MAX_NODE];
+    } * ListHead, *TreeRoot, NodePool[MAX_NODE];
     int NodePoolCnt;
 
     struct HashId {
         int key;
-        Node* data;
+        Node *data;
         HashId() : key(-1), data(NULL) {}
-    }HashIdTbl[MAX_HASH_SIZE];
+    } HashIdTbl[MAX_HASH_SIZE];
 
-    Node* findAddr(int key) {
+    Node *findAddr(int key) {
         unsigned long h = key % MAX_HASH_SIZE;
         int cnt = MAX_HASH_SIZE;
 
@@ -39,8 +39,7 @@ private:
         return nullptr;
     }
 
-
-    void addAddr(int key, Node* data) {
+    void addAddr(int key, Node *data) {
         unsigned long h = key % MAX_HASH_SIZE;
 
         while (HashIdTbl[h].key != -1) {
@@ -51,25 +50,23 @@ private:
             h = (h + 1) % MAX_HASH_SIZE;
         }
 
-
         HashIdTbl[h].key = key;
         HashIdTbl[h].data = data;
     }
 
-    Node* newNode(int size) {
-        Node* ret = &NodePool[NodePoolCnt++];
+    Node *newNode(int size) {
+        Node *ret = &NodePool[NodePoolCnt++];
         ret->size = size;
         ret->free = true;
         ret->left = ret->right = ret->prev = ret->next = nullptr;
         return ret;
     }
 
-    Node* treeInsert(Node* node, Node* newNode) {
+    Node *treeInsert(Node *node, Node *newNode) {
         if (node == nullptr) {
             node = newNode;
             node->left = node->right = nullptr;
-        }
-        else if (newNode->size < node->size)
+        } else if (newNode->size < node->size)
             node->left = treeInsert(node->left, newNode);
         else if (newNode->size > node->size)
             node->right = treeInsert(node->right, newNode);
@@ -83,7 +80,7 @@ private:
         return node;
     }
 
-    Node* treeFindMax(Node* node) {
+    Node *treeFindMax(Node *node) {
         if (node == nullptr)
             return nullptr;
         else if (node->right == nullptr)
@@ -92,9 +89,9 @@ private:
             return treeFindMax(node->right);
     }
 
-    Node* treeRemove(Node* node, Node* delNoe) {
-        if (node == nullptr) return nullptr;
-
+    Node *treeRemove(Node *node, Node *delNoe) {
+        if (node == nullptr)
+            return nullptr;
 
         if (delNoe->size < node->size)
             node->left = treeRemove(node->left, delNoe);
@@ -106,14 +103,13 @@ private:
             else if (delNoe->addr > node->addr)
                 node->right = treeRemove(node->right, delNoe);
             else if (node->left && node->right) {
-                Node* maxNode = treeFindMax(node->left);
-                Node* newLeft = treeRemove(node->left, maxNode);
-                Node* newRight = node->right;
+                Node *maxNode = treeFindMax(node->left);
+                Node *newLeft = treeRemove(node->left, maxNode);
+                Node *newRight = node->right;
                 node = maxNode;
                 node->left = newLeft;
                 node->right = newRight;
-            }
-            else {
+            } else {
                 if (node->left == nullptr)
                     node = node->right;
                 else if (node->right == nullptr)
@@ -121,15 +117,12 @@ private:
             }
         }
 
-
         return node;
     }
 
-
-    Node* treeSearch(int size) {
-        Node* curr = TreeRoot;
-        Node* candi = nullptr;
-
+    Node *treeSearch(int size) {
+        Node *curr = TreeRoot;
+        Node *candi = nullptr;
 
         while (curr) {
             if (curr->size < size) {
@@ -140,13 +133,12 @@ private:
             }
         }
 
-
-        if (candi && candi->size >= size) return candi;
+        if (candi && candi->size >= size)
+            return candi;
         return nullptr;
     }
 
-
-    void listInsert(Node* node, Node* newNode) {
+    void listInsert(Node *node, Node *newNode) {
         newNode->prev = node;
         newNode->next = node->next;
         if (node->next) {
@@ -155,15 +147,13 @@ private:
         node->next = newNode;
     }
 
-
-    void listRemove(Node* delNode) {
-        Node* prev = delNode->prev;
-        Node* next = delNode->next;
+    void listRemove(Node *delNode) {
+        Node *prev = delNode->prev;
+        Node *next = delNode->next;
         if (prev)
             prev->next = next;
         else
             ListHead = next;
-
 
         if (next)
             next->prev = prev;
@@ -176,15 +166,15 @@ public:
     }
 
     int allocate(int mSize) {
-        Node* freeNode = treeSearch(mSize);
-        if (!freeNode) return -1;
+        Node *freeNode = treeSearch(mSize);
+        if (!freeNode)
+            return -1;
 
         TreeRoot = treeRemove(TreeRoot, freeNode);
         addAddr(freeNode->addr, freeNode);
 
-
         if (mSize != freeNode->size) {
-            Node* node = newNode(freeNode->size - mSize);
+            Node *node = newNode(freeNode->size - mSize);
             node->addr = freeNode->addr + mSize;
             TreeRoot = treeInsert(TreeRoot, node);
             listInsert(freeNode, node);
@@ -196,14 +186,15 @@ public:
     }
 
     int release(int mAddr) {
-        Node* delNode = findAddr(mAddr);
-        if (!delNode) return -1;
+        Node *delNode = findAddr(mAddr);
+        if (!delNode)
+            return -1;
 
         addAddr(mAddr, nullptr);
 
         int ret = delNode->size;
-        Node* left = delNode->prev;
-        Node* right = delNode->next;
+        Node *left = delNode->prev;
+        Node *right = delNode->next;
         if (left && left->free) {
             TreeRoot = treeRemove(TreeRoot, left);
             left->size += delNode->size;
@@ -228,12 +219,13 @@ public:
         }
         return ret;
     }
-}*solution;
+} * solution;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void init(int N) {
-    if(solution) delete solution;
+    if (solution)
+        delete solution;
     solution = new Solution(N);
 }
 

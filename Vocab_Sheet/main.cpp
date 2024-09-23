@@ -12,44 +12,35 @@ extern int eraseWord(int mId);
 #define CMD_WRITE 2
 #define CMD_ERASE 3
 
-static bool run()
-{
+static bool run() {
     int query_num;
     scanf("%d", &query_num);
 
     int ans;
     bool ok = false;
 
-    for (int q = 0; q < query_num; q++)
-    {
+    for (int q = 0; q < query_num; q++) {
         int query;
         scanf("%d", &query);
-        if (query == CMD_INIT)
-        {
+        if (query == CMD_INIT) {
             int N, M;
             scanf("%d %d", &N, &M);
             init(N, M);
             ok = true;
-        }
-        else if (query == CMD_WRITE)
-        {
+        } else if (query == CMD_WRITE) {
             int mId, mLen;
             scanf("%d %d", &mId, &mLen);
             int ret = writeWord(mId, mLen);
             scanf("%d", &ans);
-            if (ans != ret)
-            {
+            if (ans != ret) {
                 ok = false;
             }
-        }
-        else if (query == CMD_ERASE)
-        {
+        } else if (query == CMD_ERASE) {
             int mId;
             scanf("%d", &mId);
             int ret = eraseWord(mId);
             scanf("%d", &ans);
-            if (ans != ret)
-            {
+            if (ans != ret) {
                 ok = false;
             }
         }
@@ -57,14 +48,12 @@ static bool run()
     return ok;
 }
 
-int main()
-{
+int main() {
     setbuf(stdout, NULL);
-     freopen("sample_input.txt", "r", stdin);
+    freopen("sample_input.txt", "r", stdin);
     int T, MARK;
     scanf("%d %d", &T, &MARK);
-    for (int tc = 1; tc <= T; tc++)
-    {
+    for (int tc = 1; tc <= T; tc++) {
         int score = run() ? MARK : 0;
         printf("#%d %d\n", tc, score);
     }

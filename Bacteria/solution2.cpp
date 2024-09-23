@@ -1,17 +1,17 @@
+#include <queue>
+#include <set>
 #include <string>
 #include <unordered_map>
-#include <set>
-#include <queue>
 #include <vector>
 
-#define MAX_BACTERIA    100
-#define MAX_NAME	    10
-#define MAX_BATCH       15000
+#define MAX_BACTERIA 100
+#define MAX_NAME 10
+#define MAX_BATCH 15000
 
-using std::string;
-using std::unordered_map;
 using std::priority_queue;
 using std::set;
+using std::string;
+using std::unordered_map;
 using std::vector;
 
 unordered_map<string, int> hash;
@@ -44,8 +44,8 @@ struct TreeCompare {
     }
 };
 
-priority_queue<Batch*, vector<Batch*>, HeapCompare> heap;
-set<Batch*, TreeCompare> tree;
+priority_queue<Batch *, vector<Batch *>, HeapCompare> heap;
+set<Batch *, TreeCompare> tree;
 
 void update(int time) {
     while (heap.size() > 0) {
@@ -81,13 +81,13 @@ int getBacteriaID(char name[]) {
 ///////////////////////////////////////////////////////////////////////////////
 
 void init(int N, char bNameList[MAX_BACTERIA][MAX_NAME], int mHalfTime[MAX_BACTERIA]) {
-    heap = priority_queue<Batch*, vector<Batch*>, HeapCompare>();
+    heap = priority_queue<Batch *, vector<Batch *>, HeapCompare>();
     hash.clear();
     tree.clear();
     batchCount = 0;
     for (int i = 0; i < N; i++) {
         hash[bNameList[i]] = i;
-        Bacteria* bacteria = &bacterias[i];
+        Bacteria *bacteria = &bacterias[i];
         bacteria->halfTime = mHalfTime[i];
         bacteria->total = 0;
     }
@@ -109,7 +109,8 @@ void addBacteria(int tStamp, char bName[MAX_NAME], int mLife, int mCnt) {
     batch->bacteria = bacteria;
 
     heap.push(batch);
-    tree.insert(batch);}
+    tree.insert(batch);
+}
 
 int takeOut(int tStamp, int mCnt) {
     update(tStamp);
@@ -129,9 +130,11 @@ int takeOut(int tStamp, int mCnt) {
         if (batch->count == 0)
             tree.erase(curr);
     }
-    return ret;}
+    return ret;
+}
 
 int checkBacteria(int tStamp, char bName[MAX_NAME]) {
     update(tStamp);
     int id = getBacteriaID(bName);
-    return bacterias[id].total;}
+    return bacterias[id].total;
+}

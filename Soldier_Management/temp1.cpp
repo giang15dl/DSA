@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 using namespace std;
 
 class Solution {
@@ -33,7 +33,7 @@ public:
     }
 
     void fire(int id) {
-        for (auto &soldier : soldiers){
+        for (auto &soldier : soldiers) {
             if (soldier.id == id) {
                 soldier.fired = true;
                 break;
@@ -42,7 +42,7 @@ public:
     }
 
     void updateSoldier(int id, int score) {
-        for (auto &soldier : soldiers){
+        for (auto &soldier : soldiers) {
             if (soldier.id == id) {
                 soldier.score = score;
                 break;
@@ -51,7 +51,7 @@ public:
     }
 
     void updateTeam(int team, int changeScore) {
-        for (auto &soldier : soldiers){
+        for (auto &soldier : soldiers) {
             if (soldier.team == team) {
                 soldier.changeScore(changeScore);
             }
@@ -61,7 +61,7 @@ public:
     int bestSoldier(int team) {
         int max = 0;
         int maxID = -1;
-        for (auto &soldier : soldiers){
+        for (auto &soldier : soldiers) {
             if (soldier.fired || soldier.team != team)
                 continue;
 
@@ -75,7 +75,7 @@ public:
         }
         return maxID;
     }
-}solution;
+} solution;
 
 ///////////////////////////////////////////////////////////////////////////////
 void init() {

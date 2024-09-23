@@ -147,6 +147,10 @@ public:
 } * solution;
 
 ////////////////////////////////////////////////////////////////////////////////
-void init(int N, int mPlane[MAXN][MAXN]) { if (solution) delete solution; solution = new Solution(N, mPlane); }
+void init(int N, int mPlane[MAXN][MAXN]) {
+    if (solution)
+        delete solution;
+    solution = new Solution(N, mPlane);
+}
 int getCount(int mPiece[SIZE][SIZE]) { return solution->getCount(mPiece); }
 int getPosition(int mRow, int mCol) { return solution->getPosition(mRow, mCol); }

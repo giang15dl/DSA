@@ -14,94 +14,89 @@ extern int mergeCivilization(int mID1, int mID2);
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 
-#define INIT					100
-#define NEW_CIVILIZATION		200
-#define REMOVE_CIVILIZATION		300
-#define GET_CIVILIZATION		400
-#define GET_CIVILIZATION_AREA	500
-#define MERGE_CIVILIZATION		600
+#define INIT 100
+#define NEW_CIVILIZATION 200
+#define REMOVE_CIVILIZATION 300
+#define GET_CIVILIZATION 400
+#define GET_CIVILIZATION_AREA 500
+#define MERGE_CIVILIZATION 600
 
-static bool run()
-{
+static bool run() {
     int Q, N, r, c, cmd;
-	int mID, mID1, mID2;
-	
-	int ans, ret = 0;
-	
-	bool okay = false;
-	
-	scanf("%d", &Q);
-    
-	for (int i = 0; i <= Q; ++i)
-	{
-		scanf("%d", &cmd);
-		switch(cmd)
-		{
-		case INIT:
-			scanf("%d", &N);
-			init(N);
-			okay = true;
-			break;
-		case NEW_CIVILIZATION:
-			scanf("%d %d %d", &r, &c, &mID);
-			if (okay)
-				ret = newCivilization(r, c, mID);
-			scanf("%d", &ans);
-			if (ans != ret)
-				okay = false;
-			break;
-		case REMOVE_CIVILIZATION:
-			scanf("%d", &mID);
-			if (okay)
-				ret = removeCivilization(mID);
-			scanf("%d", &ans);
-			if (ans != ret)
-				okay = false;
-			break;
-		case GET_CIVILIZATION:
-			scanf("%d %d", &r, &c);
-			if (okay)
-				ret = getCivilization(r, c);
-			scanf("%d", &ans);
-			if (ans != ret)
-				okay = false;
-			break;
-		case GET_CIVILIZATION_AREA:
-			scanf("%d", &mID);
-			if (okay)
-				ret = getCivilizationArea(mID);
-			scanf("%d", &ans);
-			if (ans != ret)
-				okay = false;
-			break;
-		case MERGE_CIVILIZATION:
-			scanf("%d %d", &mID1, &mID2);
-			if (okay)
-				ret = mergeCivilization(mID1, mID2);
-			scanf("%d", &ans);
-			if (ans != ret)
-				okay = false;
-			break;
-		default:
-			okay = false;
-		}
-	}
+    int mID, mID1, mID2;
+
+    int ans, ret = 0;
+
+    bool okay = false;
+
+    scanf("%d", &Q);
+
+    for (int i = 0; i <= Q; ++i) {
+        scanf("%d", &cmd);
+        switch (cmd) {
+        case INIT:
+            scanf("%d", &N);
+            init(N);
+            okay = true;
+            break;
+        case NEW_CIVILIZATION:
+            scanf("%d %d %d", &r, &c, &mID);
+            if (okay)
+                ret = newCivilization(r, c, mID);
+            scanf("%d", &ans);
+            if (ans != ret)
+                okay = false;
+            break;
+        case REMOVE_CIVILIZATION:
+            scanf("%d", &mID);
+            if (okay)
+                ret = removeCivilization(mID);
+            scanf("%d", &ans);
+            if (ans != ret)
+                okay = false;
+            break;
+        case GET_CIVILIZATION:
+            scanf("%d %d", &r, &c);
+            if (okay)
+                ret = getCivilization(r, c);
+            scanf("%d", &ans);
+            if (ans != ret)
+                okay = false;
+            break;
+        case GET_CIVILIZATION_AREA:
+            scanf("%d", &mID);
+            if (okay)
+                ret = getCivilizationArea(mID);
+            scanf("%d", &ans);
+            if (ans != ret)
+                okay = false;
+            break;
+        case MERGE_CIVILIZATION:
+            scanf("%d %d", &mID1, &mID2);
+            if (okay)
+                ret = mergeCivilization(mID1, mID2);
+            scanf("%d", &ans);
+            if (ans != ret)
+                okay = false;
+            break;
+        default:
+            okay = false;
+        }
+    }
     return okay;
 }
 
-int main()
-{
-	setbuf(stdout, NULL);
-	freopen("sample_input.txt", "r", stdin);
-	
-	int T, MARK;
-	scanf("%d %d", &T, &MARK);
+int main() {
+    setbuf(stdout, NULL);
+    freopen("sample_input.txt", "r", stdin);
 
-	for (int tc = 1; tc <= T; tc++)
-	{
-		int score = run() ? MARK : 0;
-		printf("#%d %d\n", tc, score);
-	}
+    int T, MARK;
+    scanf("%d %d", &T, &MARK);
 
-	return 0;
+    for (int tc = 1; tc <= T; tc++) {
+        int score = run() ? MARK : 0;
+        printf("#%d %d\n", tc, score);
+    }
+
+    return 0;
 }

@@ -4,8 +4,8 @@
 #define MAX_N 30
 
 // Up, Right, Down, Left        //   0
-const int di[4] = {-1,0,1,0};   // 3 x 1
-const int dj[4] = {0,1,0,-1};   //   2
+const int di[4] = {-1, 0, 1, 0}; // 3 x 1
+const int dj[4] = {0, 1, 0, -1}; //   2
 
 using namespace std;
 class Solution {
@@ -19,7 +19,7 @@ private:
         bool valid(const int N) const {
             return i >= 0 && j >= 0 && i < N && j < N;
         }
-        bool operator==(const Point& rhs) const {
+        bool operator==(const Point &rhs) const {
             return i == rhs.i && j == rhs.j;
         }
     };
@@ -31,13 +31,14 @@ private:
         State(Point coor, int dir = 0, int steps = 0) : coor(coor), dir(dir), steps(steps) {}
     };
 
-    bool DFS(const Point& src, const Point &dst, const Point &rock) const {
+    bool DFS(const Point &src, const Point &dst, const Point &rock) const {
         bool visited[MAX_N][MAX_N] = {};
         stack<Point> s;
         s.push(src);
         visited[src.i][src.j] = true;
         while (!s.empty()) {
-            Point prev = s.top(); s.pop();
+            Point prev = s.top();
+            s.pop();
             if (prev == dst)
                 return true;
             for (int d = 0; d < 4; d++) {
@@ -51,8 +52,9 @@ private:
         }
         return false;
     }
+
 public:
-    Solution () {}
+    Solution() {}
 
     Solution(int N, int mMap[MAX_N][MAX_N]) : N(N), map(mMap) {}
 
@@ -67,13 +69,14 @@ public:
         visited[dir][rock.i][goal.j] = true;
 
         while (!q.empty()) {
-            State curr = q.front(); q.pop();
+            State curr = q.front();
+            q.pop();
             if (curr.coor == goal)
                 return curr.steps;
 
             Point currPlayer = Point(curr.coor.i - di[curr.dir], curr.coor.j - dj[curr.dir]);
             for (int d = 0; d < 4; d++) {
-                Point next      (curr.coor.i + di[d], curr.coor.j + dj[d]);
+                Point next(curr.coor.i + di[d], curr.coor.j + dj[d]);
                 Point nextPlayer(curr.coor.i - di[d], curr.coor.j - dj[d]);
 
                 if (map[next.i][next.j] || map[nextPlayer.i][nextPlayer.j] || visited[d][next.i][next.j])
@@ -92,5 +95,5 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 void init(int N, int mMap[MAX_N][MAX_N]) { solution = Solution(N, mMap); }
-int push(int mRockR, int mRockC, int mDir, int mGoalR, int mGoalC) { return solution.push(mRockR, mRockC, mDir, mGoalR, mGoalC);}
+int push(int mRockR, int mRockC, int mDir, int mGoalR, int mGoalC) { return solution.push(mRockR, mRockC, mDir, mGoalR, mGoalC); }
 ////////////////////////////////////////////////////////////////////////////////

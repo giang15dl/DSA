@@ -5,6 +5,7 @@ class Solution {
     static const int MAX_N = 50000;
     static const int MAX_HASH = 10000;
     static const int MAX_TANK = 30;
+
 public:
     Solution() {}
 
@@ -30,12 +31,12 @@ public:
     }
 
     int countPosition(int len, int tank[]) {
-        const auto& indexes = getHash(len, tank);
+        const auto &indexes = getHash(len, tank);
         return indexes.size();
     }
 
     int buildAndPourOut(int len, int tank[], int water) {
-        const auto& indexes = getHash(len, tank);
+        const auto &indexes = getHash(len, tank);
         int max = 0;
         for (const auto &index : indexes) {
             int tankHeight = height[index] + tank[0];
@@ -56,7 +57,7 @@ private:
     int *height;
     vector<int> hash[MAX_HASH];
 
-    vector<int>& getHash(int len, int tank[]) {
+    vector<int> &getHash(int len, int tank[]) {
         int value = 0;
         for (int i = 1; i < len; i++) {
             int delta = tank[0] - tank[i] + 5;
@@ -109,11 +110,12 @@ private:
 
         return total;
     }
-}*solution;
+} * solution;
 
 ///////////////////////////////////////////////////////////////////////////////
 void init(int N, int mHeight[]) {
-    if (solution) delete solution;
+    if (solution)
+        delete solution;
     solution = new Solution(N, mHeight);
 }
 

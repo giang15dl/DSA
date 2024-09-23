@@ -1,12 +1,13 @@
-#include <cstdlib>
-#include <climits>
 #include <algorithm>
+#include <climits>
+#include <cstdlib>
 
 using namespace std;
 class Solution {
-static const int MAX_N = 200000;
+    static const int MAX_N = 200000;
+
 private:
-    int N; // Number of streamers
+    int N;            // Number of streamers
     int *subscribers; // Number of subscribers of each streamers
     int TreeSum[MAX_N * 4], TreeMax[MAX_N * 4], TreeMin[MAX_N * 4];
 
@@ -15,8 +16,8 @@ private:
             TreeSum[node] = TreeMax[node] = TreeMin[node] = subscribers[left];
         else {
             int mid = (left + right) / 2;
-            build(2*node + 1, left, mid);
-            build(2*node + 2, mid + 1, right);
+            build(2 * node + 1, left, mid);
+            build(2 * node + 2, mid + 1, right);
             TreeSum[node] = TreeSum[2 * node + 1] + TreeSum[2 * node + 2];
             TreeMax[node] = max(TreeMax[2 * node + 1], TreeMax[2 * node + 2]);
             TreeMin[node] = min(TreeMin[2 * node + 1], TreeMin[2 * node + 2]);
@@ -40,29 +41,34 @@ private:
     }
 
     int count(int node, int left, int right, int i, int j) {
-        if (i > right || j < left) return 0;
-        if (i <= left && right <= j) return TreeSum[node];
+        if (i > right || j < left)
+            return 0;
+        if (i <= left && right <= j)
+            return TreeSum[node];
 
         int mid = (left + right) / 2;
         return count(2 * node + 1, left, mid, i, j) + count(2 * node + 2, mid + 1, right, i, j);
     }
 
     int getMax(int node, int left, int right, int i, int j) {
-        if (i > right || j < left) return 0;
-        if (i <= left && right <= j) return TreeMax[node];
+        if (i > right || j < left)
+            return 0;
+        if (i <= left && right <= j)
+            return TreeMax[node];
 
         int mid = (left + right) / 2;
         return max(getMax(2 * node + 1, left, mid, i, j), getMax(2 * node + 2, mid + 1, right, i, j));
     }
 
     int getMin(int node, int left, int right, int i, int j) {
-        if (i > right || j < left) return INT_MAX;
-        if (i <= left && right <= j) return TreeMin[node];
+        if (i > right || j < left)
+            return INT_MAX;
+        if (i <= left && right <= j)
+            return TreeMin[node];
 
         int mid = (left + right) / 2;
         return min(getMin(2 * node + 1, left, mid, i, j), getMin(2 * node + 2, mid + 1, right, i, j));
     }
-
 
 public:
     Solution() : N(0), subscribers(NULL) {}
@@ -93,11 +99,12 @@ public:
         return max - min;
     }
 
-}*solution;
+} * solution;
 
 ////////////////////////////////////////////////////////////////////////////////
 void init(int N, int mSubscriber[]) {
-    if (solution) delete solution;
+    if (solution)
+        delete solution;
     solution = new Solution(N, mSubscriber);
 }
 

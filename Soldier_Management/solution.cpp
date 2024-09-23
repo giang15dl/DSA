@@ -2,20 +2,22 @@
 
 using namespace std;
 class Solution {
-    static const int MAX_ID = 100000; 
+    static const int MAX_ID = 100000;
+
 private:
     struct Soldier {
         int id;
         int team;
         int score;
         Soldier(int id = 0, int team = 0, int score = 0) : id(id), team(team), score(score) {}
-        bool operator<(const Soldier& that) const {
+        bool operator<(const Soldier &that) const {
             return score == that.score ? id < that.id : score < that.score;
         }
     };
 
     set<int> data[6][6];
     int soldiers[MAX_ID];
+
 public:
     Solution() {}
 
@@ -75,7 +77,7 @@ public:
         }
         return 0;
     }
-}solution;
+} solution;
 
 ///////////////////////////////////////////////////////////////////////////////
 void init() { solution = Solution(); }

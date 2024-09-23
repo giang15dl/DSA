@@ -1,5 +1,5 @@
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 class Solution {
@@ -14,16 +14,17 @@ private:
         bool contains(const string &str) const {
             if (word.length() != str.length())
                 return false;
-            for (unsigned int i = 0; i < word.length() ; i++) {
-                if(str[i] == '?')
+            for (unsigned int i = 0; i < word.length(); i++) {
+                if (str[i] == '?')
                     continue;
-                if(word[i] != str[i])
+                if (word[i] != str[i])
                     return false;
             }
             return true;
         }
     };
     vector<Words> system;
+
 public:
     Solution() {}
 
@@ -59,7 +60,7 @@ public:
         return count;
     }
 
-}solution;
+} solution;
 
 ////////////////////////////////////////////////////////////////////////////////
 void init() { solution = Solution(); }

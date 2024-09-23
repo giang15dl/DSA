@@ -1,9 +1,9 @@
-#include <string>
-#include <vector>
-#include <queue>
-#include <unordered_map>
 #include <algorithm>
 #include <functional>
+#include <queue>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 const int MAX_CITY = 50;
 const int MAX_ROAD = 50;
@@ -83,7 +83,6 @@ void addHash(const string &str, int res_index) {
         }
     }
 }
-
 
 void init(int N, int M, int mRoads[][2]) {
     R = 0;

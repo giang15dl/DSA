@@ -1,52 +1,51 @@
-#include <vector>
-#include <unordered_map>
 #include <set>
 #include <string>
- 
+#include <unordered_map>
+#include <vector>
+
 using namespace std;
- 
+
 class Stock {
 public:
-    Stock() {};
+    Stock(){};
     Stock(int stockCode, int bizcode, string type, int price) {
         this->stockCode = stockCode;
         this->bizcode = bizcode;
         this->type = type;
         this->price = price;
     };
-    ~Stock() {};
- 
-    const bool operator< (const Stock& other) const {
+    ~Stock(){};
+
+    const bool operator<(const Stock &other) const {
         return this->price == other.price ? this->stockCode < other.stockCode : this->price < other.price;
     }
- 
+
     string GetFeature() {
         return to_string(bizcode) + " " + type;
     }
- 
+
     int stockCode;
     int bizcode;
     string type;
     int price;
 };
- 
- 
+
 unordered_map<int, Stock> stocks;
 unordered_map<string, set<Stock>> features;
- 
+
 void init() {
     stocks.clear();
     features.clear();
 }
- 
+
 int add(char mStockInfo[]) {
     string str = string(mStockInfo);
- 
+
     string itemName;
     string val;
- 
+
     unordered_map<string, string> props;
- 
+
     int len = str.length();
     for (int i = 0; i < len; i++) {
         if (str[i] == '[') {
@@ -67,7 +66,7 @@ int add(char mStockInfo[]) {
             i = j;
         }
     }
- 
+
     int stockCode = atoi(props["STOCKCODE"].c_str());
     auto stock = Stock(stockCode, atoi(props["BIZCODE"].c_str()), props["TYPE"], atoi(props["PRICE"].c_str()));
     stocks[stockCode] = stock;
@@ -75,19 +74,19 @@ int add(char mStockInfo[]) {
     // int a = features[stock.GetFeature()].begin()->stockCode;
     return features[stock.GetFeature()].rbegin()->stockCode;
 }
- 
+
 int remove(int mStockCode) {
     auto stock = stocks[mStockCode];
     features[stock.GetFeature()].erase(stock);
     stocks.erase(mStockCode);
     return features[stock.GetFeature()].empty() ? -1 : features[stock.GetFeature()].begin()->stockCode;
 }
- 
+
 int search(char mCondition[]) {
     string str = string(mCondition);
- 
+
     string itemName;
- 
+
     unordered_map<string, vector<string>> props;
     int len = str.length();
     for (int i = 0; i < len; i++) {
@@ -117,13 +116,13 @@ int search(char mCondition[]) {
             i = j;
         }
     }
- 
+
     int res = -1;
     int resPrice = 1000000007;
- 
-    for (auto& bizcode : props["BIZCODE"]) {
-        for (auto& type : props["TYPE"]) {
-            for (auto& price : props["PRICE"]) {
+
+    for (auto &bizcode : props["BIZCODE"]) {
+        for (auto &type : props["TYPE"]) {
+            for (auto &price : props["PRICE"]) {
                 Stock tmp = Stock(-1, atoi(bizcode.c_str()), type, atoi(price.c_str()));
                 auto query = features[tmp.GetFeature()].lower_bound(tmp);
                 if (query == features[tmp.GetFeature()].end()) {
@@ -131,8 +130,7 @@ int search(char mCondition[]) {
                 }
                 if (query->price == resPrice && query->stockCode < res) {
                     res = query->stockCode;
-                }
-                else if (query->price < resPrice) {
+                } else if (query->price < resPrice) {
                     res = query->stockCode;
                     resPrice = query->price;
                 }

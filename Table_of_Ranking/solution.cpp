@@ -1,8 +1,8 @@
+#include <algorithm>
+#include <list>
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <list>
-#include <algorithm>
 
 const int MAX_N = 50000;
 
@@ -243,7 +243,7 @@ public:
         return res;
     }
 
-} *solution;
+} * solution;
 
 int Solution::Player::count;
 int Solution::Player::passedCount;

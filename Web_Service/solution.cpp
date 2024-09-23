@@ -1,12 +1,12 @@
+#include <array>
 #include <string>
 #include <vector>
-#include <array>
 
 using namespace std;
 class Solution {
 private:
-    static const int MAX_ID = 1000000+1; // IDs ranging from 1 to 1000000
-    static const int T = 5; // The maximum number of different hashtags in each test case is 5
+    static const int MAX_ID = 1000000 + 1; // IDs ranging from 1 to 1000000
+    static const int T = 5;                // The maximum number of different hashtags in each test case is 5
 
     struct Post {
         int id;
@@ -32,22 +32,22 @@ private:
             for (int i = 0; i < tagNum; i++)
                 this->tags[i] = findHash(tags[i]);
         }
-    }posts[MAX_ID];
+    } posts[MAX_ID];
 
     class Bucket {
     private:
         static const int SIZE = 1000;
-        Post* arr[SIZE];
+        Post *arr[SIZE];
         int f, r;
 
     public:
-        Bucket() : r(SIZE - 1), f(SIZE - 1){}
+        Bucket() : r(SIZE - 1), f(SIZE - 1) {}
 
         int front() const {
             return f;
         }
 
-        void push_front(Post* a) {
+        void push_front(Post *a) {
             arr[--f] = a;
         }
 
@@ -59,11 +59,11 @@ private:
             return f == r;
         }
 
-        Post* begin() {
+        Post *begin() {
             return arr[f];
         }
 
-        Post* end() {
+        Post *end() {
             return arr[r - 1];
         }
 
@@ -86,13 +86,13 @@ private:
         int get(int index) {
             return arr[f + index]->id;
         }
-    }buckets[3000];
+    } buckets[3000];
 
     int b;
 
-    vector<Bucket*> postLists[T][T];
+    vector<Bucket *> postLists[T][T];
 
-    void insert_posting(int i, int j, Post* new_ps) {
+    void insert_posting(int i, int j, Post *new_ps) {
         if (postLists[i][j].back()->front() == 0) {
             buckets[b].clear();
             postLists[i][j].push_back(buckets + b++);
@@ -100,7 +100,7 @@ private:
         postLists[i][j].back()->push_front(new_ps);
     }
 
-    void add_posting(Post* _new) {
+    void add_posting(Post *_new) {
         for (int y = 0; y < _new->tagNum; y++) {
             insert_posting(_new->tags[y], _new->tags[y], _new);
             for (int x = y + 1; x < _new->tagNum; x++) {
@@ -137,7 +137,7 @@ public:
             for (int j = 0; j < T; j++)
                 postLists[i][j].push_back(buckets + b++);
 
-        for (int i = N - 1; i >= 0 ; i--) {
+        for (int i = N - 1; i >= 0; i--) {
             int ID = mPostingIDs[i];
             posts[ID] = Post(ID, mHashTagNum[i], mHashTags[i]);
             add_posting(posts + ID);
@@ -186,7 +186,7 @@ public:
         return ret;
     }
 
-}*solution;
+} * solution;
 
 int Solution::Post::n;
 int Solution::Post::m;
@@ -195,7 +195,7 @@ array<string, Solution::T> Solution::Post::hashLists;
 ////////////////////////////////////////////////////////////////////////////////
 
 void init(int N, int mPostingIDs[], int mHashTagNum[], char mHashTags[][5][10]) {
-    if(solution)
+    if (solution)
         delete solution;
     solution = new Solution(N, mPostingIDs, mHashTagNum, mHashTags);
 }
@@ -207,7 +207,6 @@ void addPosting(int mID, int mHashTagNum, char mHashTags[][10]) {
 void removePosting(int mID) {
     solution->removePosting(mID);
 }
-
 
 int findPostingList(int M, char mKeyWords[][10], int mPageNum, int mAnsIDs[]) {
     return solution->findPostingList(M, mKeyWords, mPageNum, mAnsIDs);

@@ -1,11 +1,11 @@
-#include <cstdlib>
-#include <climits>
 #include <algorithm>
+#include <climits>
+#include <cstdlib>
 
 class Solution {
     static const int MAX_N = 200000; // Maximum number of streamers
 private:
-    int N; // Number of streamers
+    int N;            // Number of streamers
     int *subscribers; // Number of subscribers of each streamers
     static int treeSum[MAX_N * 4], treeMax[MAX_N * 4], treeMin[MAX_N * 4];
 
@@ -14,8 +14,8 @@ private:
             treeSum[node] = treeMax[node] = treeMin[node] = subscribers[left];
         else {
             int mid = (left + right) / 2;
-            build(2*node + 1, left, mid);
-            build(2*node + 2, mid + 1, right);
+            build(2 * node + 1, left, mid);
+            build(2 * node + 2, mid + 1, right);
             treeSum[node] = treeSum[2 * node + 1] + treeSum[2 * node + 2];
             treeMax[node] = std::max(treeMax[2 * node + 1], treeMax[2 * node + 2]);
             treeMin[node] = std::min(treeMin[2 * node + 1], treeMin[2 * node + 2]);
@@ -66,6 +66,7 @@ private:
         int mid = (left + right) / 2;
         return std::min(this->min(2 * node + 1, left, mid, i, j), this->min(2 * node + 2, mid + 1, right, i, j));
     }
+
 public:
     Solution() : N(0), subscribers(NULL) {}
 
@@ -93,7 +94,7 @@ public:
         return max(0, 0, N - 1, sId, eId) - min(0, 0, N - 1, sId, eId);
     }
 
-}solution;
+} solution;
 
 int Solution::treeSum[MAX_N * 4];
 int Solution::treeMax[MAX_N * 4];

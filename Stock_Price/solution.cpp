@@ -1,7 +1,7 @@
+#include <climits>
+#include <set>
 #include <string>
 #include <unordered_map>
-#include <set>
-#include <climits>
 
 using namespace std;
 class Solution {
@@ -9,8 +9,9 @@ private:
     struct Stock {
     private:
         int makeFeature(int bizcode, char type) {
-            return bizcode*26 + (type - 'a');
+            return bizcode * 26 + (type - 'a');
         }
+
     public:
         int code;
         int bizcode;
@@ -18,7 +19,7 @@ private:
         int price;
         int feature;
 
-        bool operator<(const Stock& that) const {
+        bool operator<(const Stock &that) const {
             return price == that.price ? code < that.code : price < that.price;
         }
 
@@ -29,7 +30,7 @@ private:
         Stock(char str[]) {
             int start = 0;
             for (int i = 0; str[i] != '\0'; i++) {
-                if (str[i+1] == ',' || str[i+1] == '\0') {
+                if (str[i + 1] == ',' || str[i + 1] == '\0') {
                     string substr = string(str, start, i - start + 1);
                     start = i + 2;
                     int len = substr.length();
@@ -37,16 +38,25 @@ private:
                     for (int j = 0; j < len; j++) {
                         if (substr[j] == '=') {
                             item = substr.substr(1, j - 2);
-                            value = substr.substr(j + 2,  len - j - 3);
+                            value = substr.substr(j + 2, len - j - 3);
                             break;
                         }
                     }
                     switch (item[0]) {
-                    case 'P': price     = stoi(value); break;
-                    case 'T': type      = value[0]; break;
-                    case 'S': code      = stoi(value); break;
-                    case 'B': bizcode   = stoi(value); break;
-                    default: break;
+                    case 'P':
+                        price = stoi(value);
+                        break;
+                    case 'T':
+                        type = value[0];
+                        break;
+                    case 'S':
+                        code = stoi(value);
+                        break;
+                    case 'B':
+                        bizcode = stoi(value);
+                        break;
+                    default:
+                        break;
                     }
                 }
             }
@@ -59,12 +69,13 @@ private:
         char type[2];
         int price;
         int t, b;
+
     public:
         Condition() {}
         Condition(char str[]) : t(0), b(0) {
             int start = 0;
             for (int i = 0; str[i] != '\0'; i++) {
-                if (str[i+1] == ';' || str[i+1] == '\0') {
+                if (str[i + 1] == ';' || str[i + 1] == '\0') {
                     string substr = string(str, start, i - start + 1);
                     start = i + 2;
                     int len = substr.length();
@@ -72,25 +83,30 @@ private:
                     for (int j = 0; j < len; j++) {
                         if (substr[j] == '=') {
                             item = substr.substr(1, j - 2);
-                            value = substr.substr(j + 2,  len - j - 3);
+                            value = substr.substr(j + 2, len - j - 3);
                             break;
                         }
                     }
                     switch (item[0]) {
-                    case 'P': price = stoi(value);
+                    case 'P':
+                        price = stoi(value);
                         break;
                     case 'T':
-                        if (value.length() == 6) type[0] = 'c', t = 1;
-                        else if (value.length() == 9) type[0] = 'p', t = 1; 
-                        else type[0] = 'c', type[1] = 'p', t = 2;
+                        if (value.length() == 6)
+                            type[0] = 'c', t = 1;
+                        else if (value.length() == 9)
+                            type[0] = 'p', t = 1;
+                        else
+                            type[0] = 'c', type[1] = 'p', t = 2;
                         break;
                     case 'B':
-                        for (unsigned int k = 0; k < value.length(); k+=2) {
+                        for (unsigned int k = 0; k < value.length(); k += 2) {
                             bizcode[b] = value[k] - '0';
                             b++;
                         }
                         break;
-                    default: break;
+                    default:
+                        break;
                     }
                 }
             }
@@ -98,6 +114,7 @@ private:
     };
     unordered_map<int, Stock> stocks;
     unordered_map<int, set<Stock>> features;
+
 public:
     Solution() {}
 
@@ -131,7 +148,7 @@ public:
                 if (it == features[stock.feature].end())
                     continue;
 
-                if (it->price == min && it->code < mincode )
+                if (it->price == min && it->code < mincode)
                     mincode = it->code;
 
                 else if (it->price < min)
@@ -142,7 +159,7 @@ public:
         return mincode;
     }
 
-}solution;
+} solution;
 
 ///////////////////////////////////////////////////////////////////////////////
 void init() { solution = Solution(); }

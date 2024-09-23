@@ -11,11 +11,10 @@ int push(int mRockR, int mRockC, int mDir, int mGoalR, int mGoalC);
 
 /////////////////////////////////////////////////////////////////////////
 
-#define INIT		100
-#define PUSH		200
+#define INIT 100
+#define PUSH 200
 
-static bool run()
-{
+static bool run() {
     int cmd, ans, ret;
     int N, r, c, dir, r2, c2;
     int Q = 0;
@@ -24,12 +23,10 @@ static bool run()
 
     scanf("%d", &Q);
 
-    for (int q = 0; q < Q; ++q)
-    {
+    for (int q = 0; q < Q; ++q) {
         scanf("%d", &cmd);
 
-        switch (cmd)
-        {
+        switch (cmd) {
         case INIT:
             scanf("%d", &N);
 
@@ -57,16 +54,14 @@ static bool run()
     return okay;
 }
 
-int main()
-{
+int main() {
     setbuf(stdout, NULL);
     freopen("sample_input.txt", "r", stdin);
 
     int T, MARK;
     scanf("%d %d", &T, &MARK);
 
-    for (int tc = 1; tc <= T; tc++)
-    {
+    for (int tc = 1; tc <= T; tc++) {
         int score = run() ? MARK : 0;
         printf("#%d %d\n", tc, score);
     }

@@ -90,13 +90,13 @@ int main(int argc, char **argv) {
     const char *input = (argc > 1) ? argv[1] : "input.txt";
     freopen(input, "r", stdin);
 
-    int T; // Total Number of Test cases
+    int T;    // Total Number of Test cases
     int MARK; // Total Mark
     cin >> T >> MARK;
 
     for (int t = 0; t < T; t++) {
         int score = run() ? MARK : 0;
-        cout << "#" << t+1 << " " << score << endl;
+        cout << "#" << t + 1 << " " << score << endl;
     }
 
     return 0;

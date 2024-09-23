@@ -1,8 +1,8 @@
-#include <vector>
+#include <algorithm>
+#include <functional>
 #include <set>
 #include <unordered_map>
-#include <functional>
-#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -10,6 +10,7 @@ class Solution {
     static const int MAX_N = 20000;
     static const int MAX_M = 1000;
     static const int MAX_ID = 50000 + 1;
+
 private:
     int N, M;
 
@@ -30,7 +31,7 @@ private:
             return (col + len - 1) < that.col;
         }
 
-    }words[MAX_ID];
+    } words[MAX_ID];
 
     set<Word> treeSet[MAX_N];
 
@@ -39,6 +40,7 @@ private:
         int S;
         int maxColumn;
         vector<int> node;
+
     public:
         SegmentTree() {}
 
@@ -72,7 +74,7 @@ private:
         // get the leaf and parents
         void update(int row, int val) {
             std::function<void(int, int, int)> binarySearch = [&](int col, int left, int right) -> void {
-                if (row < left|| row > right)
+                if (row < left || row > right)
                     return;
 
                 if (left == right && left == row) {
@@ -85,7 +87,7 @@ private:
 
                 binarySearch(leftId, left, mid);
                 binarySearch(rightId, mid + 1, right);
-                node[col] = node[leftId] > node[rightId] ? node[leftId]: node[rightId];
+                node[col] = node[leftId] > node[rightId] ? node[leftId] : node[rightId];
             };
             binarySearch(1, 0, S - 1);
         }
@@ -100,7 +102,7 @@ private:
             it++;
             while (it != treeSet[row].end()) {
                 Word next = *it;
-                int emptySpace = next.col - (curr.col + curr.len - 1 ) - 1;
+                int emptySpace = next.col - (curr.col + curr.len - 1) - 1;
                 maxSpace = max(maxSpace, emptySpace);
                 curr = next;
                 it++;
@@ -110,7 +112,7 @@ private:
             maxSpace = max(maxSpace, lastSpace);
             return maxSpace;
         }
-    }segmentTree;
+    } segmentTree;
 
 public:
     // N: number of rows (5 <= N <= 20,000)
@@ -187,7 +189,7 @@ public:
         segmentTree.update(word.row, maxSpace);
         return word.row;
     }
-} *solution;
+} * solution;
 
 ///////////////////////////////////////////////////////////////////////////////
 void init(int N, int M) { solution = new Solution(N, M); }

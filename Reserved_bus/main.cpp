@@ -15,47 +15,43 @@ extern int findPath(int mStart, int mEnd, int M, int mStops[]);
 #define CMD_ADD 2
 #define CMD_FIND 3
 
-static bool run()
-{
+static bool run() {
     int query_num;
     scanf("%d", &query_num);
 
     int ans;
     bool ok = false;
 
-    for (int q = 0; q < query_num; q++)
-    {
+    for (int q = 0; q < query_num; q++) {
         int query;
         scanf("%d", &query);
-        if (query == CMD_INIT)
-        {
+        if (query == CMD_INIT) {
             int N, K;
             int mRoadAs[MAX_K];
             int mRoadBs[MAX_K];
             int mLens[MAX_K];
             scanf("%d %d", &N, &K);
-            for (int i = 0; i < K; i++) scanf("%d", &mRoadAs[i]);
-            for (int i = 0; i < K; i++) scanf("%d", &mRoadBs[i]);
-            for (int i = 0; i < K; i++) scanf("%d", &mLens[i]);
+            for (int i = 0; i < K; i++)
+                scanf("%d", &mRoadAs[i]);
+            for (int i = 0; i < K; i++)
+                scanf("%d", &mRoadBs[i]);
+            for (int i = 0; i < K; i++)
+                scanf("%d", &mLens[i]);
             init(N, K, mRoadAs, mRoadBs, mLens);
             ok = true;
-        }
-        else if (query == CMD_ADD)
-        {
+        } else if (query == CMD_ADD) {
             int mRoadA, mRoadB, mLen;
             scanf("%d %d %d", &mRoadA, &mRoadB, &mLen);
             addRoad(mRoadA, mRoadB, mLen);
-        }
-        else if (query == CMD_FIND)
-        {
+        } else if (query == CMD_FIND) {
             int mStart, mEnd, M;
             int mStops[MAX_M];
             scanf("%d %d %d", &mStart, &mEnd, &M);
-            for (int i = 0; i < M; i++) scanf("%d", &mStops[i]);
+            for (int i = 0; i < M; i++)
+                scanf("%d", &mStops[i]);
             int ret = findPath(mStart, mEnd, M, mStops);
             scanf("%d", &ans);
-            if (ans != ret)
-            {
+            if (ans != ret) {
                 ok = false;
             }
         }
@@ -63,14 +59,12 @@ static bool run()
     return ok;
 }
 
-int main()
-{
+int main() {
     setbuf(stdout, NULL);
-     freopen("sample_input.txt", "r", stdin);
+    freopen("sample_input.txt", "r", stdin);
     int T, MARK;
     scanf("%d %d", &T, &MARK);
-    for (int tc = 1; tc <= T; tc++)
-    {
+    for (int tc = 1; tc <= T; tc++) {
         int score = run() ? MARK : 0;
         printf("#%d %d\n", tc, score);
     }

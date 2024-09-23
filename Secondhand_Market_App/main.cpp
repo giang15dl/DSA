@@ -11,23 +11,24 @@ extern void adjustPrice(char tag1[], int changePrice);
 
 /////////////////////////////////////////////////////////////////////////
 
-#define INIT	0
-#define ADD		1
-#define BUY		2
-#define ADJ		3
+#define INIT 0
+#define ADD 1
+#define BUY 2
+#define ADJ 3
 
 static void mstrcpy(char dst[], const char src[]) {
     int c = 0;
-    while ((dst[c] = src[c]) != '\0') ++c;
+    while ((dst[c] = src[c]) != '\0')
+        ++c;
 }
 static int mstrcmp(const char str1[], const char str2[]) {
     int c = 0;
-    while (str1[c] != '\0' && str1[c] == str2[c]) ++c;
+    while (str1[c] != '\0' && str1[c] == str2[c])
+        ++c;
     return str1[c] - str2[c];
 }
 
-static bool run()
-{
+static bool run() {
     int N, cmd, ans, ret, tnum, price;
     char tag[5][10];
 
@@ -38,11 +39,9 @@ static bool run()
     okay = false;
 
     scanf("%d", &Q);
-    for (int i = 0; i < Q; ++i)
-    {
+    for (int i = 0; i < Q; ++i) {
         scanf("%d", &cmd);
-        switch (cmd)
-        {
+        switch (cmd) {
         case INIT:
             scanf("%d", &N);
             init(N);
@@ -77,16 +76,14 @@ static bool run()
     return okay;
 }
 
-int main()
-{
+int main() {
     setbuf(stdout, NULL);
     freopen("sample_input.txt", "r", stdin);
 
     int T, MARK;
     scanf("%d %d", &T, &MARK);
 
-    for (int tc = 1; tc <= T; tc++)
-    {
+    for (int tc = 1; tc <= T; tc++) {
         int score = run() ? MARK : 0;
         printf("#%d %d\n", tc, score);
     }

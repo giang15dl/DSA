@@ -4,9 +4,9 @@ class Solution {
 private:
     static const int SIZE = 26; // letters in the alphabet
     struct Node {
-        Node* child[SIZE];
+        Node *child[SIZE];
         int count;
-        Node () : count(0){
+        Node() : count(0) {
             for (int i = 0; i < SIZE; i++)
                 child[i] = NULL;
         }
@@ -15,7 +15,7 @@ private:
                 delete child[i];
             }
         }
-    }*root;
+    } * root;
 
     void searching(char str[], Node *node, int pos, bool removed, int &count) {
         if (node == NULL)
@@ -32,8 +32,7 @@ private:
             for (int i = 0; i < SIZE; i++)
                 if (node->child[i] != NULL)
                     searching(str, node->child[i], pos + 1, removed, count);
-        }
-        else {
+        } else {
             searching(str, node->child[str[pos] - 'a'], pos + 1, removed, count);
         }
     }
@@ -72,10 +71,14 @@ public:
         return count;
     }
 
-}*solution;
+} * solution;
 
 ////////////////////////////////////////////////////////////////////////////////
-void init() { if (solution) delete solution; solution = new Solution(); }
+void init() {
+    if (solution)
+        delete solution;
+    solution = new Solution();
+}
 int add(char str[]) { return solution->add(str); }
 int remove(char str[]) { return solution->remove(str); }
 int search(char str[]) { return solution->search(str); }

@@ -32,12 +32,10 @@ static bool run() {
 
     scanf("%d", &numQuery);
 
-    for (int i = 0; i < numQuery; ++i)
-    {
+    for (int i = 0; i < numQuery; ++i) {
         int cmd;
         scanf("%d", &cmd);
-        switch (cmd)
-        {
+        switch (cmd) {
         case CMD_INIT:
             init();
             isCorrect = true;
@@ -62,8 +60,7 @@ static bool run() {
             scanf("%d", &mTeam);
             userAns = bestSoldier(mTeam);
             scanf("%d", &ans);
-            if (userAns != ans)
-            {
+            if (userAns != ans) {
                 isCorrect = false;
             }
             break;
@@ -76,16 +73,14 @@ static bool run() {
     return isCorrect;
 }
 
-int main()
-{
+int main() {
     setbuf(stdout, NULL);
     freopen("sample_input.txt", "r", stdin);
 
     int T, MARK;
     scanf("%d %d", &T, &MARK);
 
-    for (int tc = 1; tc <= T; tc++)
-    {
+    for (int tc = 1; tc <= T; tc++) {
         int score = run() ? MARK : 0;
         printf("#%d %d\n", tc, score);
     }

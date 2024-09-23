@@ -13,10 +13,10 @@ extern int getMinTime(int mStartGateID, int mEndGateID);
 
 /////////////////////////////////////////////////////////////////////////
 
-#define CMD_INIT			0
-#define CMD_ADD_GATE		1
-#define CMD_REMOVE_GATE		2
-#define CMD_GET_MIN_TIME	3
+#define CMD_INIT 0
+#define CMD_ADD_GATE 1
+#define CMD_REMOVE_GATE 2
+#define CMD_GET_MIN_TIME 3
 
 static int gMap[MAX_MAP_SIZE][MAX_MAP_SIZE];
 
@@ -31,12 +31,11 @@ static bool run() {
     for (int q = 0; q < Q; ++q) {
         scanf("%d", &cmd);
 
-        switch (cmd)
-        {
+        switch (cmd) {
         case CMD_INIT:
             scanf("%d %d", &N, &maxStamina);
-            for (int i = 0 ; i <= N - 1 ; i++) {
-                for (int j = 0 ; j <= N - 1 ; j++) {
+            for (int i = 0; i <= N - 1; i++) {
+                for (int j = 0; j <= N - 1; j++) {
                     scanf("%d", &gMap[i][j]);
                 }
             }
@@ -77,7 +76,7 @@ int main() {
     int T, MARK;
     scanf("%d %d", &T, &MARK);
 
-    for (int tc = 1 ; tc <= T ; tc++) {
+    for (int tc = 1; tc <= T; tc++) {
         int score = run() ? MARK : 0;
         printf("#%d %d\n", tc, score);
     }

@@ -9,14 +9,14 @@ int dj[4] = {0, 1, 0, -1};
 
 struct Point {
     int i, j;
-    Point () : i(0), j(0) {}
-    Point (int i, int j) : i(i), j(j) {}
+    Point() : i(0), j(0) {}
+    Point(int i, int j) : i(i), j(j) {}
 };
 
 int (*map)[MAX_N];
 
 struct Gate {
-    Gate* adj[MAX_GATE];
+    Gate *adj[MAX_GATE];
     int dist[MAX_GATE];
     int adjCnt;
     bool isDel;
@@ -30,7 +30,7 @@ struct Gate {
         isDel = false;
     }
 
-    void addNeighbor(Gate* neighbor, int mDist) {
+    void addNeighbor(Gate *neighbor, int mDist) {
         adj[adjCnt] = neighbor;
         dist[adjCnt++] = mDist;
     }
@@ -40,13 +40,13 @@ int maxStamina, gateNum;
 
 int mTime = 0;
 
-void BFS(Gate* gate, int r, int c) {
+void BFS(Gate *gate, int r, int c) {
     int visited[MAX_N][MAX_N] = {};
     int steps[MAX_N][MAX_N] = {};
-    register Gate* neighbor;
+    register Gate *neighbor;
 
     queue<Point> q;
-    q.push(Point(r,c));
+    q.push(Point(r, c));
     steps[r][c] = 0;
     visited[r][c] = ++mTime;
 
@@ -73,12 +73,11 @@ void BFS(Gate* gate, int r, int c) {
     }
 }
 
-
-Gate* heap[MAX_GATE]; //priority-queue for Dijsktra
+Gate *heap[MAX_GATE]; //priority-queue for Dijsktra
 int hSize = 0;
 
 void hSwap(int i, int j) {
-    register Gate* tmp = heap[i];
+    register Gate *tmp = heap[i];
     heap[i] = heap[j];
     heap[j] = tmp;
     heap[i]->heapIdx = i;
@@ -86,18 +85,18 @@ void hSwap(int i, int j) {
 }
 
 void upHeapify(int curr) {
-    for ( ; curr > 1 && heap[curr]->D < heap[curr >> 1]->D; curr >>= 1) 
+    for (; curr > 1 && heap[curr]->D < heap[curr >> 1]->D; curr >>= 1)
         hSwap(curr, curr >> 1);
 }
 
-void hPush(Gate* gate) {
+void hPush(Gate *gate) {
     gate->heapIdx = ++hSize;
     heap[hSize] = gate;
     upHeapify(hSize);
 }
 
-Gate* hPop() {
-    Gate* ret = heap[1];
+Gate *hPop() {
+    Gate *ret = heap[1];
     heap[1] = heap[hSize--];
     heap[1]->heapIdx = 1;
 
@@ -113,7 +112,6 @@ Gate* hPop() {
     }
     return ret;
 }
-
 
 void init(int N, int mMaxStamina, int mMap[MAX_N][MAX_N]) {
     maxStamina = mMaxStamina;
