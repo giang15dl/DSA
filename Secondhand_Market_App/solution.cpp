@@ -13,7 +13,7 @@ private:
     static const int MAX_LEN = 9; // Maximum length of a tag name
 
     int N; // The number of tags available on the app
-    int P; // Count total products
+    int P = 0; // Count total products
 
     struct Product {
         int price;
@@ -28,7 +28,7 @@ private:
     unordered_map<string, vector<int>> hash3tag;
 
 public:
-    Solution(int N = 0) : N(N), P(0) {}
+    Solution(int N = 0) : N(N) {}
 
     void addProduct(int mPrice, int tagNum, char tagName[][10]) {
         products.push_back(Product(mPrice));
