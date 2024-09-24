@@ -12,7 +12,7 @@ private:
     static const int MAX_TAGS = 30;
     static const int MAX_LEN = 9; // Maximum length of a tag name
 
-    int N; // The number of tags available on the app
+    int N;     // The number of tags available on the app
     int P = 0; // Count total products
 
     struct Product {
