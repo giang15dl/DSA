@@ -1,6 +1,7 @@
 build/
 .cache/
 *.pdf
+*.exe
 *.pptx
 **/temp.cpp
 **/temp[0-9]*.cpp
