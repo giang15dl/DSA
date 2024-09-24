@@ -2,4 +2,5 @@ build/
 .cache/
 *.pdf
 *.pptx
-**/temp*.cpp
+**/temp.cpp
+**/temp[0-9]*.cpp
