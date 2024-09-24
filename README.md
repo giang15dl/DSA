@@ -1,10 +1,10 @@
 # SW Professional Level
 
-## How to build and run
+## How to build
 
 ### Using make
 
-```bash
+```ps1
 mkdir build
 cd build
 cmake .. -G "MinGW Makefiles"
@@ -15,9 +15,17 @@ make Survival_Train # build single target
 
 ### Using Visual Studio (msbuild)
 
-```bash
+```ps1
 mkdir build
 cd build
 cmake .. -G "Visual Studio 15 2017"
 cmake --build .
+```
+
+## Run
+
+```ps1
+cd build/Bacteria
+./Bacteria
+(Measure-Command {./Bacteria | Out-Default }).ToString() # To measure run time
 ```
