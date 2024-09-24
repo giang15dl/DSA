@@ -5,177 +5,158 @@
 #include <unordered_map>
 #include <vector>
 
-const int MAX_CITY = 50;
-const int MAX_ROAD = 50;
-const int MAX_RES = 10000;
-
 using namespace std;
 
-struct Res {
-    int city;
-    int value;
-};
+class Solution {
+private:
+    static const int MAX_N = 50;
+    static const int MAX_M = 50;
+    static const int MAX_R = 10000;
 
-struct City {
-    vector<int> neighbors;
-    vector<int> res_indexes;
+    int N, M, R; // Number of cities, roads and restaurants, respectively
+    unordered_map<string, int> hashName, hashMap;
 
-    void addRes(int index) {
-        res_indexes.push_back(index);
-    }
-
-    bool exist(int index) const {
-        for (int res_index : res_indexes)
-            if (res_index == index)
+    struct Restaurant {
+        string name;
+        int value;
+        int cityID;
+        Restaurant() : name(), value(0), cityID(0) {}
+        Restaurant(int cityID, char name[]) : name(name), value(0), cityID(cityID) {}
+        bool has(char mStr[]) const {
+            string subStr = mStr;
+            if (name.find(subStr) != std::string::npos)
                 return true;
-        return false;
-    }
-};
-
-Res restaurants[MAX_RES];
-City Cities[MAX_CITY];
-
-void swap(int &a, int &b) {
-    int tmp = a;
-    a = b;
-    b = tmp;
-}
-
-void sort(int *ptr, int len) {
-    for (int i = 0; i < len - 1; i++) {
-        int max_idx = i;
-        for (int j = i + 1; j < len; j++) {
-            if (restaurants[ptr[i]].value < restaurants[ptr[j]].value)
-                max_idx = j;
+            return false;
         }
-        swap(ptr[i], ptr[max_idx]);
-    }
-}
-
-void sort(vector<int> &cityRes) {
-    int len = cityRes.size();
-    for (int i = 0; i < len - 1; i++) {
-        int max_idx = i;
-        for (int j = i + 1; j < len; j++) {
-            if (restaurants[cityRes[i]].value < restaurants[cityRes[j]].value)
-                max_idx = j;
+        bool at(int cityID) const {
+            return this->cityID == cityID;
         }
-        swap(cityRes[i], cityRes[max_idx]);
-    }
-}
+    };
+    vector<Restaurant> restaurants;
 
-int R;
-unordered_map<string, int> hashName, hashMap;
+    struct City {
+        vector<int> neighbors;
+        vector<int> res_indexes;
 
-// void addHash(char name[], int res_index) {
-void addHash(const string &str, int res_index) {
-    // string str(name);
-    unsigned int len = str.size();
+        void addRes(int index) {
+            res_indexes.push_back(index);
+        }
 
-    for (unsigned int i = 1; i <= len; i++) {
-        for (unsigned int j = 0; j + i <= len; j++) {
-            string substr = str.substr(j, i);
-            auto it = hashMap.find(substr);
-            if (it == hashMap.end())
-                hashMap[substr] = res_index;
-            else if (restaurants[it->second].value < restaurants[res_index].value)
-                hashMap[substr] = res_index;
+        bool has(int index) const {
+            for (int res_index : res_indexes)
+                if (res_index == index)
+                    return true;
+            return false;
+        }
+    };
+    vector<City> cities;
+
+    void addHash(char name[], int res_index) {
+        string str(name);
+        unsigned int len = str.size();
+
+        for (unsigned int i = 1; i <= len; i++) {
+            for (unsigned int j = 0; j + i <= len; j++) {
+                string substr = str.substr(j, i);
+                auto it = hashMap.find(substr);
+                if (it == hashMap.end())
+                    hashMap[substr] = res_index;
+                else if (restaurants[it->second].value < restaurants[res_index].value)
+                    hashMap[substr] = res_index;
+            }
         }
     }
-}
 
+public:
+    Solution() : N(0), M(0), R(0) {}
+
+    Solution(int N, int M, int mRoads[][2]) : N(N), M(M), R(0) {
+        cities.resize(N);
+        for (int i = 0; i < M; i++) {
+            int u = mRoads[i][0];
+            int v = mRoads[i][1];
+            u--, v--;
+            cities[u].neighbors.push_back(v);
+            cities[v].neighbors.push_back(u);
+        }
+    }
+
+    void addRestaurant(int mCityID, char mName[]) {
+        mCityID--;
+        restaurants.push_back(Restaurant(mCityID, mName));
+        hashName[mName] = R;
+        cities[mCityID].addRes(R);
+        addHash(mName, R);
+        R++;
+    }
+
+    void addValue(char mName[], int mScore) {
+        int r = hashName[mName];
+        restaurants[r].value += mScore;
+        addHash(mName, r);
+    }
+
+    int bestValue(char mStr[]) {
+        int r = hashMap[mStr];
+        return restaurants[r].value;
+    }
+
+    int regionalValue(int mCityID, int mDist) {
+        mCityID--;
+        int visited[MAX_N] = {};
+        vector<int> topVal;
+        queue<int> q;
+        q.push(mCityID);
+        visited[mCityID] = 1;
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+            if (visited[u] - 1 > mDist)
+                break;
+
+            for (const auto &r : restaurants)
+                if (r.at(u))
+                    topVal.push_back(r.value);
+
+            for (char v : cities[u].neighbors) {
+                if (visited[v])
+                    continue;
+                visited[v] = visited[u] + 1;
+                q.push(v);
+            }
+        }
+
+        if (topVal.size() <= 3) {
+            int sum = 0;
+            for (unsigned int i = 0; i < topVal.size(); i++)
+                sum += topVal[i];
+            return sum;
+        }
+
+        sort(topVal.begin(), topVal.end(), greater<int>());
+
+        return topVal[0] + topVal[1] + topVal[2];
+    }
+
+} solution;
+
+///////////////////////////////////////////////////////////////////////////////
 void init(int N, int M, int mRoads[][2]) {
-    R = 0;
-    hashMap.clear();
-    hashName.clear();
-
-    for (int i = 0; i < N; i++) {
-        Cities[i].neighbors.clear();
-        Cities[i].res_indexes.clear();
-    }
-
-    for (int i = 0; i < M; i++) {
-        int u = mRoads[i][0];
-        int v = mRoads[i][1];
-        u--, v--;
-        Cities[u].neighbors.push_back(v);
-        Cities[v].neighbors.push_back(u);
-    }
+    solution = Solution(N, M, mRoads);
 }
 
 void addRestaurant(int mCityID, char mName[]) {
-    mCityID--;
-    restaurants[R].city = mCityID;
-    restaurants[R].value = 0;
-    hashName[mName] = R;
-
-    Cities[mCityID].addRes(R);
-
-    if (Cities[mCityID].res_indexes.size() > 3)
-        Cities[mCityID].res_indexes.pop_back();
-
-    addHash(mName, R);
-    R++;
+    solution.addRestaurant(mCityID, mName);
 }
 
 void addValue(char mName[], int mScore) {
-    int res_idx = hashName[mName];
-    restaurants[res_idx].value += mScore;
-
-    int cityID = restaurants[res_idx].city;
-
-    if (!Cities[cityID].exist(res_idx))
-        Cities[cityID].addRes(res_idx);
-
-    sort(Cities[cityID].res_indexes);
-
-    if (Cities[cityID].res_indexes.size() > 3)
-        Cities[cityID].res_indexes.pop_back();
-
-    addHash(mName, res_idx);
+    solution.addValue(mName, mScore);
 }
 
 int bestValue(char mStr[]) {
-    int idx = hashMap[mStr];
-    return restaurants[idx].value;
+    return solution.bestValue(mStr);
 }
 
 int regionalValue(int mCityID, int mDist) {
-    mCityID--;
-    int visited[MAX_CITY] = {};
-    vector<int> topVal;
-    queue<int> q;
-    q.push(mCityID);
-    visited[mCityID] = 1;
-    int cSize = 0;
-
-    while (!q.empty()) {
-        int u = q.front();
-        q.pop();
-
-        if (visited[u] - 1 > mDist)
-            break;
-
-        for (int res_indexes : Cities[u].res_indexes)
-            topVal.push_back(restaurants[res_indexes].value);
-
-        for (char v : Cities[u].neighbors) {
-            if (visited[v])
-                continue;
-
-            visited[v] = visited[u] + 1;
-            q.push(v);
-        }
-    }
-
-    if (topVal.size() <= 3) {
-        int sum = 0;
-        for (unsigned int i = 0; i < topVal.size(); i++)
-            sum += topVal[i];
-        return sum;
-    }
-
-    sort(topVal.begin(), topVal.end(), greater<int>());
-
-    return topVal[0] + topVal[1] + topVal[2];
+    return solution.regionalValue(mCityID, mDist);
 }
