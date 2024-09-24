@@ -27,14 +27,6 @@ private:
     unordered_map<string, vector<int>> hash1tag;
     unordered_map<string, vector<int>> hash3tag;
 
-    int hashCode(int a, int b, int c) {
-        return a + b * N + c * N * N;
-    }
-
-    int hashCode(vector<int> id) {
-        return hashCode(id[0], id[1], id[2]);
-    }
-
 public:
     Solution(int N = 0) : N(N), P(0) {}
 
