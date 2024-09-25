@@ -15,7 +15,7 @@ private:
                 delete child[i];
             }
         }
-    } * root;
+    } *root;
 
     void searching(char str[], Node *node, int pos, bool removed, int &count) {
         if (node == NULL)
@@ -71,7 +71,7 @@ public:
         return count;
     }
 
-} * solution;
+} *solution;
 
 ////////////////////////////////////////////////////////////////////////////////
 void init() {
