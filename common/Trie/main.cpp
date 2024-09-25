@@ -16,17 +16,17 @@ class Trie {
     shared_ptr<Node> root;
     int Total_words;
 
-    int to_integer(char c) {
+    int to_integer(char c) const {
         return static_cast<int>(c - 'a');
     }
 
-    bool part_delete(const string &trieString, shared_ptr<Node> &checkout) {
+    bool part_delete(const string &word, shared_ptr<Node> &checkout) {
         // Word is not present in the Trie then returns false and stops further recursion
         if (checkout == nullptr)
             return false;
 
         // At the end of the word if the word is present in trie then setting isWord to false either returning false
-        if (trieString.size() == 0) {
+        if (word.size() == 0) {
             if (checkout->isWord == true) {
                 checkout->isWord = false;
                 return true;
@@ -35,18 +35,18 @@ class Trie {
         }
 
         // String excluding first character
-        string part = trieString.substr(1);
+        string substr = word.substr(1);
 
         // Recursive call to Partdelete for rest of the string(part)
-        if (part_delete(part, checkout->child[to_integer(trieString[0])])) {
+        if (part_delete(substr, checkout->child[to_integer(word[0])])) {
 
             // Checks whether it is empty node then delete this node
-            if (empty(checkout->child[to_integer(trieString[0])])) {
+            if (empty(checkout->child[to_integer(word[0])])) {
 
                 // Resetting memory and making it nullptr
-                checkout->child[to_integer(trieString[0])].reset();
+                checkout->child[to_integer(word[0])].reset();
 
-                checkout->child[to_integer(trieString[0])] = nullptr;
+                checkout->child[to_integer(word[0])] = nullptr;
 
                 return true;
             } else
@@ -98,7 +98,7 @@ public:
     }
 
     // For ease of recursion; passing root to Partdelete
-    bool erase(string &word) {
+    bool erase(const string &word) {
         if (part_delete(word, root))
             return true;
         return false;
