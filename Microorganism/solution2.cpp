@@ -74,8 +74,8 @@ public:
     }
 
     int getCount(int tStamp, int mMinSpan, int mMaxSpan) {
-        int ans = 0;
         update(tStamp);
+        int count = 0;
         int diff = (mMaxSpan / RATE) - (mMinSpan / RATE);
         if (diff == 0) {
             for (auto it : treeLifeSpan[mMinSpan / RATE]) {
@@ -83,41 +83,41 @@ public:
                     break;
                 }
                 if (it.lifeSpan >= mMinSpan) {
-                    ans++;
+                    count++;
                 }
             }
         }
         if (diff == 1) {
             for (auto it : treeLifeSpan[mMinSpan / RATE]) {
                 if (it.lifeSpan >= mMinSpan) {
-                    ans++;
+                    count++;
                 }
             }
             for (auto it : treeLifeSpan[mMaxSpan / RATE]) {
                 if (it.lifeSpan > mMaxSpan) {
                     break;
                 }
-                ans++;
+                count++;
             }
         }
         if (diff > 1) {
             for (auto it : treeLifeSpan[mMinSpan / RATE]) {
                 if (it.lifeSpan >= mMinSpan) {
-                    ans++;
+                    count++;
                 }
             }
             for (auto it : treeLifeSpan[mMaxSpan / RATE]) {
                 if (it.lifeSpan > mMaxSpan) {
                     break;
                 }
-                ans++;
+                count++;
             }
             for (int i = (mMinSpan / RATE) + 1; i < (mMaxSpan / RATE); i++) {
-                ans += treeLifeSpan[i].size();
+                count += treeLifeSpan[i].size();
             }
         }
 
-        return ans;
+        return count;
     }
 };
 
