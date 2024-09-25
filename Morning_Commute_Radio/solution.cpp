@@ -6,7 +6,7 @@ class Solution {
 private:
     static const int MAX_N = 100'000;
     static const int MAX_M = 1'000;
-    static const int MAX_SEGMENT = 317;
+    static const int MAX_SEGMENT = 317; // sqrt(100000)
 
 private:
     // Number of points on the roads. Point ID is numbered from 0 to N - 1.
@@ -62,9 +62,9 @@ public:
         auto &times = types[mTypeID];
 
         for (int id : times) {
-            int old = mTime[id];
-            mTime[id] = old * mRatio256 / 256;
-            int diff = old - mTime[id];
+            int oldTime = mTime[id];
+            mTime[id] = oldTime * mRatio256 / 256;
+            int diff = oldTime - mTime[id];
             int segID = id / rate;
             segment[segID] -= diff;
             sum += mTime[id];
@@ -82,21 +82,20 @@ public:
         int begin = (mA < mB) ? mA : mB;
         int end = (mA < mB) ? mB : mA;
 
-        int totalTime = 0;
+        int sum = 0;
 
         for (int i = begin; i < end;) {
             if (i % rate == 0 && i + rate - 1 < end) {
                 int segID = i / rate;
-                totalTime += segment[segID];
+                sum += segment[segID];
                 i += rate;
-            }
-            else {
-                totalTime += mTime[i];
+            } else {
+                sum += mTime[i];
                 i++;
             }
         }
 
-        return totalTime;
+        return sum;
     }
 
 } *solution;
