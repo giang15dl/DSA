@@ -1,0 +1,108 @@
+Case #1
+312
+Case #2
+321
+Case #3
+7732
+Case #4
+88832
+Case #5
+772
+Case #6
+964421
+Case #7
+5552
+Case #8
+411
+Case #9
+7655
+Case #10
+7403
+Case #11
+7321
+Case #12
+8311
+Case #13
+97531
+Case #14
+975540
+Case #15
+8201
+Case #16
+66550
+Case #17
+937
+Case #18
+96550
+Case #19
+654
+Case #20
+85300
+Case #21
+87503
+Case #22
+521
+Case #23
+887730
+Case #24
+430
+Case #25
+6311
+Case #26
+37
+Case #27
+58
+Case #28
+7513
+Case #29
+766553
+Case #30
+29
+Case #31
+513
+Case #32
+885531
+Case #33
+821
+Case #34
+631
+Case #35
+934
+Case #36
+65103
+Case #37
+65433
+Case #38
+876522
+Case #39
+996
+Case #40
+774210
+Case #41
+84330
+Case #42
+87565
+Case #43
+886530
+Case #44
+83
+Case #45
+79
+Case #46
+7743
+Case #47
+5500
+Case #48
+966221
+Case #49
+6530
+Case #50
+5
+Case #51
+976
+Case #52
+86311
+Case #53
+5411
+Case #54
+751

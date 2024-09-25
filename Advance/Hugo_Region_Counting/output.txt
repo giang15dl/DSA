@@ -1,0 +1,100 @@
+Case #1
+11
+Case #2
+1
+Case #3
+31
+Case #4
+130
+Case #5
+60
+Case #6
+44
+Case #7
+51
+Case #8
+51
+Case #9
+47
+Case #10
+1231
+Case #11
+1205
+Case #12
+1224
+Case #13
+1226
+Case #14
+1204
+Case #15
+1234
+Case #16
+1256
+Case #17
+1207
+Case #18
+1227
+Case #19
+1201
+Case #20
+1199
+Case #21
+1176
+Case #22
+1205
+Case #23
+1218
+Case #24
+1215
+Case #25
+1207
+Case #26
+1180
+Case #27
+1159
+Case #28
+1175
+Case #29
+1177
+Case #30
+3129
+Case #31
+4849
+Case #32
+4740
+Case #33
+4721
+Case #34
+4713
+Case #35
+4838
+Case #36
+4792
+Case #37
+4675
+Case #38
+4702
+Case #39
+4778
+Case #40
+4833
+Case #41
+4774
+Case #42
+4778
+Case #43
+4785
+Case #44
+4828
+Case #45
+4764
+Case #46
+4776
+Case #47
+4763
+Case #48
+4724
+Case #49
+4836
+Case #50
+4723

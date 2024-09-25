@@ -1,0 +1,10 @@
+Case 1: Island never splits.
+Case 2: Island splits when ocean rises 3 feet.
+Case 3: Island splits when ocean rises 3 feet.
+Case 4: Island splits when ocean rises 4 feet.
+Case 5: Island splits when ocean rises 10 feet.
+Case 6: Island splits when ocean rises 7 feet.
+Case 7: Island never splits.
+Case 8: Island splits when ocean rises 10 feet.
+Case 9: Island splits when ocean rises 10 feet.
+Case 10: Island splits when ocean rises 261 feet.

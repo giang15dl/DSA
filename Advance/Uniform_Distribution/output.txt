@@ -1,0 +1,24 @@
+Case #1
+wrong
+Case #2
+good
+Case #3
+wrong
+Case #4
+wrong
+Case #5
+good
+Case #6
+wrong
+Case #7
+wrong
+Case #8
+good
+Case #9
+wrong
+Case #10
+wrong
+Case #11
+good
+Case #12
+wrong

@@ -1,4 +1,7 @@
 build/
+.vs/
+# .vscode/*
+# !.vscode/launch.json
 .cache/
 *.pdf
 *.exe

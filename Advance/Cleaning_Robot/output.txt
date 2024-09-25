@@ -1,0 +1,22 @@
+Case #1
+8
+Case #2
+38
+Case #3
+37
+Case #4
+52
+Case #5
+-1
+Case #6
+78
+Case #7
+43
+Case #8
+28
+Case #9
+3
+Case #10
+54
+Case #11
+50

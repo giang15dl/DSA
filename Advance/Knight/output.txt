@@ -1,0 +1,104 @@
+Case #1
+3
+Case #2
+12
+Case #3
+59
+Case #4
+40
+Case #5
+44
+Case #6
+20
+Case #7
+67
+Case #8
+51
+Case #9
+57
+Case #10
+111
+Case #11
+45
+Case #12
+25
+Case #13
+71
+Case #14
+88
+Case #15
+47
+Case #16
+83
+Case #17
+19
+Case #18
+22
+Case #19
+83
+Case #20
+27
+Case #21
+32
+Case #22
+60
+Case #23
+31
+Case #24
+28
+Case #25
+43
+Case #26
+36
+Case #27
+63
+Case #28
+32
+Case #29
+46
+Case #30
+35
+Case #31
+28
+Case #32
+44
+Case #33
+50
+Case #34
+34
+Case #35
+14
+Case #36
+35
+Case #37
+83
+Case #38
+36
+Case #39
+20
+Case #40
+42
+Case #41
+29
+Case #42
+25
+Case #43
+22
+Case #44
+38
+Case #45
+29
+Case #46
+36
+Case #47
+48
+Case #48
+101
+Case #49
+55
+Case #50
+36
+Case #51
+39
+Case #52
+70

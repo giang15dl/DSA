@@ -1,0 +1,78 @@
+The SS Telecom wants to find the houses in a certain area that are not covered by the base stations of the company. They converted a map of the area into an nxn 2-dimensional array in which a single house can be located in an element (cell) of the array. There are three types of base stations; type A base station can cover only four neighboring cells, type B can cover up to two cells, and type C can cover up to three cells, in the four directions (East, West, North, and South), respectively, as shown in the following figure.
+ 
+In the following map, thereare four houses that cannot be covered by four base stations of type A.
+ 
+Write a program that finds the number of houses that cannot be covered by the base stations in a given map of 2-dimensional array.
+
+[Constraints]
+The array size n is not greater than 50 for a nxn 2-dimensional array. The total number of base stations is not more than 50. Assume that both a house and a base station are not located at the same cell.
+
+[Input]
+The test cases consist of the following format. In the first line, the number of test cases is given. From the next line, each test case is provided in n+1 lines. In the first line of each test case, n is given. In the next n lines, the 2-dimensional array of the map of a certain area is given row-by-row, one row per line. Each element of the array is one of {‘X’, ‘H’, ‘A’, ‘B’, ‘C’}, indicating that an element is ‘X’ if there is nothing in the cell, ‘H’ if there is a house, ‘A’ if there is a base station of type A, ‘B’ if there is a base station of type B, and ‘C’ if there is a base station of type C.
+
+[Output]
+Print out the number of houses that are not covered by the base stations for each test case on a separate line, starting with ‘#x’, where x is the case number. Place a blank between two adjacent numbers for printing.
+
+[Sample Input and Output]
+Input
+ 
+4                     ← Total number of test cases (Test Cases for actual evaluation:50)
+9                     ← n, Test case # 1
+X X X X X X X X X 
+X X X H X X X X X 
+X X H A H X X H X 
+X X H H X X X X X 
+X X X X X X X X X 
+X X A H H X X X X 
+X X H X X H A H X 
+X X A H X X H X X 
+X X H X H X X X X 
+10                     ← n, Test case # 2
+X X X X H C X X X X 
+X X X X X X X X X X 
+X X X X X X X X X X 
+X X X X X X X X B X 
+X X H X X X X H X X 
+X X X X X X X X B X 
+X X X X H X X H X X 
+X X H B X X X X X X 
+X X X X X X X X X X 
+H B H X X X X X H X 
+12                     ← n, Test case # 3
+X X X X X A X X X X X X 
+X X X X A X X X X C X X 
+X X X X X H X X X X H X 
+X X X X X B H X X X X X 
+H X X X X X X X X X X X 
+X H X C X X X X X X X X 
+X X X X X X X X X X X X 
+X X H X X X X X X C H X 
+A X X X X H X X H X X X 
+X X X X X X X H X X X X 
+X X X H A X X X X X X H 
+X C X X X X H X X B X X 
+15                     ← n, Test case # 4
+H H X X X X X X X X B B X H X 
+X X X X X X X X X X X X C X X 
+X X H X X X C X X X X X H X X 
+X X X X X X X X X X X X X X X 
+X X X X X X X X X X X X X X X 
+X X X X X X X X X X X X X X X 
+X X X X X X X X X A X B X X H 
+X X X X X X X X X X X X X X X 
+H X X X X X X X X X X X X X X 
+X X X X X X X X X X X X X H X 
+X X X X X X X C X X X X X X X 
+X X X X X X X X X X X X H X H 
+X B X X H X X X X X X X X X H 
+X X X X X X H A X X X X A X X 
+X X X X X X X X X X X X H X X 
+…
+ 
+Output
+#1 4
+#2 5
+#3 8
+#4 10
+…
+
