@@ -20,35 +20,35 @@ private:
     } bacterias[MAX_B];
 
     struct greater {
-        bool operator()(const Bacteria *a, const Bacteria *b) {
-            return a->nextHalfTime > b->nextHalfTime;
+        bool operator()(const Bacteria a, const Bacteria b) {
+            return a.nextHalfTime > b.nextHalfTime;
         }
     };
 
     struct less {
-        bool operator()(const Bacteria *a, const Bacteria *b) const {
-            return (a->lifeSpan == b->lifeSpan) ? a->id < b->id : a->lifeSpan < b->lifeSpan;
+        bool operator()(const Bacteria a, const Bacteria b) const {
+            return (a.lifeSpan == b.lifeSpan) ? a.id < b.id : a.lifeSpan < b.lifeSpan;
         }
     };
 
-    priority_queue<Bacteria *, vector<Bacteria *>, greater> heapNextHalfTime;
-    set<Bacteria *, less> treeLifeSpan;
+    priority_queue<Bacteria, vector<Bacteria>, greater> heapNextHalfTime;
+    set<Bacteria, less> treeLifeSpan;
 
     void update(int time) {
         while (!heapNextHalfTime.empty()) {
-            Bacteria *bacteria = heapNextHalfTime.top();
+            Bacteria bacteria = heapNextHalfTime.top();
 
-            if (bacteria->nextHalfTime > time)
+            if (bacteria.nextHalfTime > time)
                 break;
 
             heapNextHalfTime.pop();
             treeLifeSpan.erase(bacteria);
 
-            int nextLifeSpan = bacteria->lifeSpan / 2;
+            int nextLifeSpan = bacteria.lifeSpan / 2;
 
             if (nextLifeSpan > 99) {
-                bacteria->lifeSpan = nextLifeSpan;
-                bacteria->nextHalfTime += bacteria->halfTime;
+                bacteria.lifeSpan = nextLifeSpan;
+                bacteria.nextHalfTime += bacteria.halfTime;
                 heapNextHalfTime.push(bacteria);
                 treeLifeSpan.insert(bacteria);
             }
@@ -59,15 +59,13 @@ public:
     Solution() {}
     void addBacteria(int tStamp, int mID, int mLifeSpan, int mHalfTime) {
         bacterias[mID] = Bacteria(mID, mLifeSpan, mHalfTime, tStamp + mHalfTime);
-        heapNextHalfTime.push(&bacterias[mID]);
-        treeLifeSpan.insert(&bacterias[mID]);
+        heapNextHalfTime.push(bacterias[mID]);
+        treeLifeSpan.insert(bacterias[mID]);
     }
 
     int getMinLifeSpan(int tStamp) {
         update(tStamp);
-        auto min = treeLifeSpan.begin();
-        auto bacteria = *min;
-        return bacteria->id;
+        return treeLifeSpan.begin()->id;
     }
 
     int getCount(int tStamp, int mMinSpan, int mMaxSpan) {
@@ -78,10 +76,10 @@ public:
         Bacteria min = Bacteria(0, mMinSpan, 0, 0);
         Bacteria max = Bacteria(INT_MAX, mMaxSpan, 0, 0);
 
-        auto lower = treeLifeSpan.lower_bound(&min);
-        auto upper = treeLifeSpan.lower_bound(&max);
+        auto lower = treeLifeSpan.lower_bound(min);
+        auto upper = treeLifeSpan.lower_bound(max);
 
-        if (upper != treeLifeSpan.end() && (*upper)->lifeSpan == max.lifeSpan)
+        if (upper != treeLifeSpan.end() && (*upper).lifeSpan == max.lifeSpan)
             count++;
 
         for (auto it = lower; lower != upper; lower++)
