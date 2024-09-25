@@ -4,63 +4,23 @@
 using namespace std;
 class Trie {
     static const int ALPHABET_SIZE = 'z' - 'a' + 1;
-    struct TrieNode {
+    struct Node {
         bool isWord;
-        shared_ptr<TrieNode> child[ALPHABET_SIZE];
-        TrieNode() : isWord(false) {
+        shared_ptr<Node> child[ALPHABET_SIZE];
+        Node() : isWord(false) {
             for (int i = 0; i < ALPHABET_SIZE; i++)
-                child[i] = shared_ptr<TrieNode>();
+                child[i] = shared_ptr<Node>();
         }
     };
 
-    shared_ptr<TrieNode> root;
+    shared_ptr<Node> root;
     int Total_words;
 
     int to_integer(char c) {
         return static_cast<int>(c - 'a');
     }
 
-public:
-    Trie() : Total_words(0) {
-        root = shared_ptr<TrieNode>(new TrieNode());
-    }
-
-    ~Trie() {}
-
-    void insert(const string &trieString) {
-        shared_ptr<TrieNode> current = root;
-        for (size_t i = 0; i < trieString.size(); i++) {
-
-            // If word after some prefix is not present then creates new node
-            if (current->child[to_integer(trieString[i])] == shared_ptr<TrieNode>(nullptr))
-                current->child[to_integer(trieString[i])] = shared_ptr<TrieNode>(new TrieNode());
-
-            current = (current->child[to_integer(trieString[i])]);
-        }
-
-        // Now word is added in Trie so at leaf node for that word isWord=true
-        current->isWord = true;
-    }
-
-    // Searching for word whether it is present in Trie
-    bool find(const string &trieString) {
-        shared_ptr<TrieNode> current = root;
-
-        for (size_t i = 0; i < trieString.size(); i++) {
-            // If at any point in Trie Node for particular character is not present means nullptr then return false
-            if (current->child[to_integer(trieString[i])] == shared_ptr<TrieNode>(nullptr))
-                return false;
-            current = current->child[to_integer(trieString[i])];
-        }
-
-        // At the end of the word checking whether this word is really present or not
-        if (current->isWord == true)
-            return true;
-
-        return false;
-    }
-
-    bool part_delete(const string &trieString, shared_ptr<TrieNode> &checkout) {
+    bool part_delete(const string &trieString, shared_ptr<Node> &checkout) {
         // Word is not present in the Trie then returns false and stops further recursion
         if (checkout == nullptr)
             return false;
@@ -97,17 +57,57 @@ public:
         return false;
     }
 
+public:
+    Trie() : Total_words(0) {
+        root = shared_ptr<Node>(new Node());
+    }
+
+    ~Trie() {}
+
+    void insert(const string &word) {
+        shared_ptr<Node> current = root;
+        for (size_t i = 0; i < word.size(); i++) {
+
+            // If word after some prefix is not present then creates new node
+            if (current->child[to_integer(word[i])] == shared_ptr<Node>(nullptr))
+                current->child[to_integer(word[i])] = shared_ptr<Node>(new Node());
+
+            current = (current->child[to_integer(word[i])]);
+        }
+
+        // Now word is added in Trie so at leaf node for that word isWord=true
+        current->isWord = true;
+    }
+
+    // Searching for word whether it is present in Trie
+    bool find(const string &word) {
+        shared_ptr<Node> current = root;
+
+        for (size_t i = 0; i < word.size(); i++) {
+            // If at any point in Trie Node for particular character is not present means nullptr then return false
+            if (current->child[to_integer(word[i])] == shared_ptr<Node>(nullptr))
+                return false;
+            current = current->child[to_integer(word[i])];
+        }
+
+        // At the end of the word checking whether this word is really present or not
+        if (current->isWord == true)
+            return true;
+
+        return false;
+    }
+
     // For ease of recursion; passing root to Partdelete
-    bool erase(string &trieString) {
-        if (part_delete(trieString, root))
+    bool erase(string &word) {
+        if (part_delete(word, root))
             return true;
         return false;
     }
 
     // Checks whether there is no children present
-    bool empty(shared_ptr<TrieNode> check) const {
+    bool empty(shared_ptr<Node> node) const {
         for (int i = 0; i < ALPHABET_SIZE; i++)
-            if (check->child[i] != nullptr || check->isWord == true)
+            if (node->child[i] != nullptr || node->isWord == true)
                 return false;
         return true;
     }
