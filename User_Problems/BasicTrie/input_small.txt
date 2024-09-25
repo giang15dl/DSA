@@ -1,0 +1,11 @@
+10
+0 abcdepqrst
+0 abghurjjekkf
+0 abcdepqrst
+2 abc
+2 ab
+3 abcdepqrst
+1 abcdepqrst
+3 abcdepqrst
+2 abcdepqrst
+2 abgh

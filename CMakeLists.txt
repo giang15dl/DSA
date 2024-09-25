@@ -32,3 +32,7 @@ add_subdirectory(Vocab_Sheet)
 add_subdirectory(Water_Tank_Installing)
 add_subdirectory(Web_Service)
 add_subdirectory(Word_Search)
+
+add_subdirectory(User_Problems/BasicTrie)
+
+add_subdirectory(common/Trie)
