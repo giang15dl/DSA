@@ -3,12 +3,13 @@
 
 using namespace std;
 class Trie {
-    static const int ALPHABET_SIZE = 'z' - 'a' + 1;
+    static const int SIZE = 'z' - 'a' + 1;
     struct Node {
-        bool isWord;
-        shared_ptr<Node> child[ALPHABET_SIZE];
-        Node() : isWord(false) {
-            for (int i = 0; i < ALPHABET_SIZE; i++)
+        bool isLeaf;
+        int count;
+        shared_ptr<Node> child[SIZE];
+        Node() : isLeaf(false) {
+            for (int i = 0; i < SIZE; i++)
                 child[i] = shared_ptr<Node>();
         }
     };
@@ -27,8 +28,8 @@ class Trie {
 
         // At the end of the word if the word is present in trie then setting isWord to false either returning false
         if (word.size() == 0) {
-            if (checkout->isWord == true) {
-                checkout->isWord = false;
+            if (checkout->isLeaf == true) {
+                checkout->isLeaf = false;
                 return true;
             }
             return false;
@@ -76,7 +77,7 @@ public:
         }
 
         // Now word is added in Trie so at leaf node for that word isWord=true
-        current->isWord = true;
+        current->isLeaf = true;
     }
 
     // Searching for word whether it is present in Trie
@@ -91,7 +92,7 @@ public:
         }
 
         // At the end of the word checking whether this word is really present or not
-        if (current->isWord == true)
+        if (current->isLeaf == true)
             return true;
 
         return false;
@@ -106,8 +107,8 @@ public:
 
     // Checks whether there is no children present
     bool empty(shared_ptr<Node> node) const {
-        for (int i = 0; i < ALPHABET_SIZE; i++)
-            if (node->child[i] != nullptr || node->isWord == true)
+        for (int i = 0; i < SIZE; i++)
+            if (node->child[i] != nullptr || node->isLeaf == true)
                 return false;
         return true;
     }
@@ -115,6 +116,7 @@ public:
 
 int main() {
     shared_ptr<Trie> trie(new Trie());
+    // Trie *trie = new Trie();
 
     string word1 = "aaa";
     string word2 = "aab";
