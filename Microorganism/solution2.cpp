@@ -60,8 +60,8 @@ public:
     Solution() {}
     void addBacteria(int tStamp, int mID, int mLifeSpan, int mHalfTime) {
         bacterias[mID] = Bacteria(mID, mLifeSpan, mHalfTime, tStamp + mHalfTime);
-        treeLifeSpan[mLifeSpan / RATE].insert(bacterias[mID]);
         heapNextHalfTime.push(bacterias[mID]);
+        treeLifeSpan[mLifeSpan / RATE].insert(bacterias[mID]);
     }
 
     int getMinLifeSpan(int tStamp) {
