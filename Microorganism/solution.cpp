@@ -44,10 +44,10 @@ private:
             heapNextHalfTime.pop();
             treeLifeSpan.erase(bacteria);
 
-            int life = bacteria->lifeSpan / 2;
+            int nextLifeSpan = bacteria->lifeSpan / 2;
 
-            if (life > 99) {
-                bacteria->lifeSpan = life;
+            if (nextLifeSpan > 99) {
+                bacteria->lifeSpan = nextLifeSpan;
                 bacteria->nextHalfTime += bacteria->halfTime;
                 heapNextHalfTime.push(bacteria);
                 treeLifeSpan.insert(bacteria);
