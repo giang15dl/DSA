@@ -1,9 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define MAX_L 8
+
 #include <cstring>
 #include <set>
-#include <string.h>
 #include <string>
-#define MAX_L 8
 
 struct RESULT {
     int success;
