@@ -13,6 +13,18 @@ class Trie {
         ~Node() {}
     };
 
+    int countNode = 0;
+    Node *newNode() {
+        static const int MAX = 300000;
+        static Node nodes[MAX];
+        for (int i = 0; i < SIZE; i++) {
+            nodes[countNode].child[i] = nullptr;
+        }
+
+        nodes[countNode].count = 0;
+        return &nodes[countNode++];
+    }
+
     Node *root;
 
     void clear(Node *node) {
@@ -62,7 +74,7 @@ class Trie {
 
 public:
     Trie() {
-        root = new Node();
+        root = newNode();
     }
 
     ~Trie() {
@@ -74,7 +86,7 @@ public:
         for (int i = 0; str[i] != 0; i++) {
             int index = str[i] - 'a';
             if (node->child[index] == nullptr)
-                node->child[index] = new Node();
+                node->child[index] = newNode();
 
             node = node->child[index];
         }
@@ -98,8 +110,6 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 Trie *trie;
 void init() {
-    if (trie)
-        delete trie;
     trie = new Trie();
 }
 int add(char str[]) { return trie->add(str); }
