@@ -20,23 +20,40 @@ class Trie {
 
     Node *root;
 
-    void search(const char str[], Node *node, int pos, bool removed, int &count) {
+    void search(const char str[], Node *node, int &count, int pos = 0) {
         if (node == NULL)
             return;
 
         if (str[pos] == 0) {
             count += node->count;
-            if (removed)
-                node->count = 0;
             return;
         }
 
         if (str[pos] == '?') {
             for (int i = 0; i < SIZE; i++)
                 if (node->child[i] != NULL)
-                    search(str, node->child[i], pos + 1, removed, count);
+                    search(str, node->child[i], count, pos + 1);
         } else {
-            search(str, node->child[str[pos] - 'a'], pos + 1, removed, count);
+            search(str, node->child[str[pos] - 'a'], count, pos + 1);
+        }
+    }
+
+    void remove(const char str[], Node *node, int &count, int pos = 0) {
+        if (node == NULL)
+            return;
+
+        if (str[pos] == 0) {
+            count += node->count;
+            node->count = 0;
+            return;
+        }
+
+        if (str[pos] == '?') {
+            for (int i = 0; i < SIZE; i++)
+                if (node->child[i] != NULL)
+                    remove(str, node->child[i], count, pos + 1);
+        } else {
+            remove(str, node->child[str[pos] - 'a'], count, pos + 1);
         }
     }
 
@@ -50,27 +67,27 @@ public:
     }
 
     int add(const char str[]) {
-        Node *it = root;
+        Node *node = root;
         for (int i = 0; str[i] != 0; i++) {
             char index = str[i] - 'a';
-            if (it->child[index] == NULL) {
-                it->child[index] = new Node();
+            if (node->child[index] == nullptr) {
+                node->child[index] = new Node();
             }
-            it = it->child[index];
+            node = node->child[index];
         }
-        it->count++;
-        return it->count;
+        node->count++;
+        return node->count;
     }
 
     int remove(const char str[]) {
         int count = 0;
-        search(str, root, 0, true, count);
+        remove(str, root, count);
         return count;
     }
 
     int search(const char str[]) {
         int count = 0;
-        search(str, root, 0, false, count);
+        search(str, root, count);
         return count;
     }
 };
