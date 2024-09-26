@@ -7,7 +7,7 @@ class Trie {
         Node *parent;
         Node *child[SIZE];
 
-        Node() : isLeaf(false), count(0), parent(nullptr) {
+        Node() : isLeaf(0), count(0), parent(nullptr) {
             for (int i = 0; i < SIZE; i++)
                 this->child[i] = nullptr;
         }
