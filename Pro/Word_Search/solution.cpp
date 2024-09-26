@@ -20,6 +20,14 @@ class Trie {
 
     Node *root;
 
+    void clear(Node *node) {
+        if (node == nullptr)
+            return;
+        for (int i = 0; i < SIZE; i++)
+            clear(node->child[i]);
+        delete node;
+    }
+
     void search(const char str[], Node *node, int &count, int pos = 0) {
         if (node == NULL)
             return;
@@ -69,10 +77,10 @@ public:
     int add(const char str[]) {
         Node *node = root;
         for (int i = 0; str[i] != 0; i++) {
-            char index = str[i] - 'a';
-            if (node->child[index] == nullptr) {
+            int index = str[i] - 'a';
+            if (node->child[index] == nullptr)
                 node->child[index] = new Node();
-            }
+
             node = node->child[index];
         }
         node->count++;
