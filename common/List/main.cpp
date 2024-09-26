@@ -1,58 +1,27 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include "list.hpp"
-#include <iostream>
 
-using namespace std;
-int main(int argc, char **argv) {
-    const char *input = (argc > 1) ? argv[1] : "input.txt";
-    freopen(input, "r", stdin);
-
-    int T;
-    cin >> T;
-
-    for (int t = 0; t < T; t++) {
-        cout << "#" << t + 1 << " ";
-        int N;
-        cin >> N;
-
-        list<int> dl;
-        for (int i = 0; i < N; i++) {
-            char cmd;
-            int j, K;
-
-            cin >> cmd;
-            switch (cmd) {
-            case 'f': // insert front
-                cin >> K;
-                dl.push_front(K);
-                break;
-
-            case 'i': // insert
-                cin >> j >> K;
-                j++;
-                dl.insert(j, K);
-                break;
-
-            case 'r': // replace
-                dl.pop_front();
-                break;
-
-            case 'd': // delete
-                cin >> j;
-                j++;
-                dl.erase(j);
-                break;
-            case 'p': // print
-                cin >> j;
-                dl.print(j);
-                break;
-
-            default:
-                break;
-            }
-        }
-        cout << endl;
-    }
+int main() {
+    list<int> l;
+    l.print();
+    l.push_front(1);
+    l.push_front(2);
+    l.push_front(3);
+    l.push_front(4);
+    l.insert(1, 5);
+    l.insert(2, 6);
+    l.insert(3, 7);
+    l.insert(4, 8);
+    l.push_back(9);
+    l.push_back(10);
+    l.push_back(11);
+    l.push_back(12);
+    l.print();
+    l.pop_front();
+    l.print();
+    l.pop_back();
+    l.print();
+    l.erase(5);
+    l.print();
 
     return 0;
 }
