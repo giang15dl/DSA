@@ -1,23 +1,26 @@
 #include <cstdlib>
 
-class Solution {
-private:
-    static const int SIZE = 26; // letters in the alphabet
+class Trie {
+    static const int SIZE = 'z' - 'a' + 1; // letters in the alphabet
+
     struct Node {
-        Node *child[SIZE];
         int count;
+        Node *child[SIZE];
+
         Node() : count(0) {
             for (int i = 0; i < SIZE; i++)
-                child[i] = NULL;
+                child[i] = nullptr;
         }
-        ~Node() {
-            for (int i = 0; i < SIZE; i++) {
-                delete child[i];
-            }
-        }
-    } *root;
 
-    void searching(char str[], Node *node, int pos, bool removed, int &count) {
+        ~Node() {
+            for (int i = 0; i < SIZE; i++)
+                delete child[i];
+        }
+    };
+
+    Node *root;
+
+    void search(const char str[], Node *node, int pos, bool removed, int &count) {
         if (node == NULL)
             return;
 
@@ -31,22 +34,22 @@ private:
         if (str[pos] == '?') {
             for (int i = 0; i < SIZE; i++)
                 if (node->child[i] != NULL)
-                    searching(str, node->child[i], pos + 1, removed, count);
+                    search(str, node->child[i], pos + 1, removed, count);
         } else {
-            searching(str, node->child[str[pos] - 'a'], pos + 1, removed, count);
+            search(str, node->child[str[pos] - 'a'], pos + 1, removed, count);
         }
     }
 
 public:
-    Solution() {
+    Trie() {
         root = new Node();
     }
 
-    ~Solution() {
+    ~Trie() {
         delete root;
     }
 
-    int add(char str[]) {
+    int add(const char str[]) {
         Node *it = root;
         for (int i = 0; str[i] != 0; i++) {
             char index = str[i] - 'a';
@@ -59,27 +62,27 @@ public:
         return it->count;
     }
 
-    int remove(char str[]) {
+    int remove(const char str[]) {
         int count = 0;
-        searching(str, root, 0, true, count);
+        search(str, root, 0, true, count);
         return count;
     }
 
-    int search(char str[]) {
+    int search(const char str[]) {
         int count = 0;
-        searching(str, root, 0, false, count);
+        search(str, root, 0, false, count);
         return count;
     }
-
-} *solution;
+};
 
 ////////////////////////////////////////////////////////////////////////////////
+Trie *trie;
 void init() {
-    if (solution)
-        delete solution;
-    solution = new Solution();
+    if (trie)
+        delete trie;
+    trie = new Trie();
 }
-int add(char str[]) { return solution->add(str); }
-int remove(char str[]) { return solution->remove(str); }
-int search(char str[]) { return solution->search(str); }
+int add(char str[]) { return trie->add(str); }
+int remove(char str[]) { return trie->remove(str); }
+int search(char str[]) { return trie->search(str); }
 ////////////////////////////////////////////////////////////////////////////////
