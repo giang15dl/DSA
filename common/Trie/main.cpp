@@ -7,15 +7,17 @@ class Trie {
     struct Node {
         bool isLeaf;
         int count;
+        shared_ptr<Node> parent;
         shared_ptr<Node> child[SIZE];
-        Node() : isLeaf(false) {
+
+        Node() : isLeaf(false), count(0), parent(shared_ptr<Node>()) {
             for (int i = 0; i < SIZE; i++)
                 child[i] = shared_ptr<Node>();
         }
     };
 
     shared_ptr<Node> root;
-    int Total_words;
+    int count;
 
     int to_integer(char c) const {
         return static_cast<int>(c - 'a');
@@ -59,40 +61,42 @@ class Trie {
     }
 
 public:
-    Trie() : Total_words(0) {
+    Trie() : count(0) {
         root = shared_ptr<Node>(new Node());
     }
 
     ~Trie() {}
 
     void insert(const string &word) {
-        shared_ptr<Node> current = root;
+        shared_ptr<Node> node = root;
+
         for (size_t i = 0; i < word.size(); i++) {
-
+            int index = to_integer(word[i]);
             // If word after some prefix is not present then creates new node
-            if (current->child[to_integer(word[i])] == shared_ptr<Node>(nullptr))
-                current->child[to_integer(word[i])] = shared_ptr<Node>(new Node());
+            if (node->child[index] == shared_ptr<Node>(nullptr))
+                node->child[index] = shared_ptr<Node>(new Node());
 
-            current = (current->child[to_integer(word[i])]);
+            node = (node->child[index]);
         }
 
         // Now word is added in Trie so at leaf node for that word isWord=true
-        current->isLeaf = true;
+        node->isLeaf = true;
     }
 
     // Searching for word whether it is present in Trie
     bool find(const string &word) {
-        shared_ptr<Node> current = root;
+        shared_ptr<Node> node = root;
 
         for (size_t i = 0; i < word.size(); i++) {
+            int index = to_integer(word[i]);
             // If at any point in Trie Node for particular character is not present means nullptr then return false
-            if (current->child[to_integer(word[i])] == shared_ptr<Node>(nullptr))
+            if (node->child[index] == shared_ptr<Node>(nullptr))
                 return false;
-            current = current->child[to_integer(word[i])];
+            node = node->child[index];
         }
 
         // At the end of the word checking whether this word is really present or not
-        if (current->isLeaf == true)
+        if (node->isLeaf == true)
             return true;
 
         return false;
