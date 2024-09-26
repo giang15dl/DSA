@@ -1,5 +1,7 @@
-#define INT_MAX 2147483647
-template<typename T>
+#include <cstdlib>
+#include <iostream>
+
+template <typename T>
 class list {
 private:
     T m_size;
@@ -10,7 +12,7 @@ private:
 
         Node() : m_data(0), p_prev(NULL), p_next(NULL) {}
         Node(T data) : m_data(data), p_prev(NULL), p_next(NULL) {}
-    }*p_head;
+    } *p_head;
 
 public:
     list() : m_size(0), p_head(NULL) {}
@@ -23,9 +25,9 @@ public:
         return m_size;
     }
 
-    void push_front(const T& data){
-        Node* newNode = new Node(data);
-        if(empty()){
+    void push_front(const T &data) {
+        Node *newNode = new Node(data);
+        if (empty()) {
             p_head = newNode;
             m_size++;
             return;
@@ -37,15 +39,15 @@ public:
         m_size++;
     }
 
-    void push_back(const T& data){
-        Node* newNode = new Node(data);
+    void push_back(const T &data) {
+        Node *newNode = new Node(data);
         if (empty()) {
             p_head = newNode;
             m_size++;
             return;
         }
 
-        Node* temp = p_head;
+        Node *temp = p_head;
         while (temp->p_next != NULL)
             temp = temp->p_next;
 
@@ -61,21 +63,21 @@ public:
         if (m_size == 0)
             p_head = NULL;
 
-        if(pos == 1){ 
+        if (pos == 1) {
             push_front(data);
             return;
         }
 
-        if(pos > m_size ){
+        if (pos > m_size) {
             push_back(data);
             return;
         }
 
-        Node* temp = p_head;
+        Node *temp = p_head;
         for (int i = 1; temp != NULL && i < pos; i++)
             temp = temp->p_next;
 
-        Node* newNode = new Node(data);
+        Node *newNode = new Node(data);
         newNode->p_next = temp;
         newNode->p_prev = temp->p_prev;
         newNode->p_prev->p_next = newNode;
@@ -87,7 +89,7 @@ public:
         if (empty())
             return;
 
-        Node* temp = p_head;
+        Node *temp = p_head;
         p_head = p_head->p_next;
         if (p_head != NULL)
             p_head->p_prev = NULL;
@@ -100,7 +102,7 @@ public:
         if (empty())
             return;
 
-        Node* temp = p_head;
+        Node *temp = p_head;
         if (temp->p_next == NULL) {
             p_head = NULL;
             delete temp;
@@ -124,7 +126,7 @@ public:
             return;
         }
 
-        if(pos == m_size){
+        if (pos == m_size) {
             pop_back();
             return;
         }
@@ -132,7 +134,7 @@ public:
         if (empty())
             return;
 
-        Node* temp = p_head;
+        Node *temp = p_head;
         for (int i = 1; temp != NULL && i < pos; i++)
             temp = temp->p_next;
 
@@ -146,21 +148,20 @@ public:
         delete temp;
     }
 
-    void print(int pos = INT_MAX){
+    void print(int pos = INT_MAX) {
         if (empty()) {
             std::cout << "empty ";
             return;
         }
 
-        Node* temp = p_head;
+        Node *temp = p_head;
         if (pos >= m_size) {
-            while(temp != NULL) {
+            while (temp != NULL) {
                 std::cout << temp->m_data << " ";
                 temp = temp->p_next;
             }
-        }
-        else {
-            while(pos != 0) {
+        } else {
+            while (pos != 0) {
                 std::cout << temp->m_data << " ";
                 temp = temp->p_next;
                 pos--;

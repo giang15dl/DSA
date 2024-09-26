@@ -1,8 +1,7 @@
-#include <iostream>
 #include "list.hpp"
 
 int main() {
-    list l;
+    list<int> l;
     l.print();
     l.push_front(1);
     l.push_front(2);

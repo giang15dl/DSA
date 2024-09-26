@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
 #include "list.hpp"
+#include <iostream>
 
 using namespace std;
 int main(int argc, char **argv) {
@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
     cin >> T;
 
     for (int t = 0; t < T; t++) {
-        cout << "#" << t + 1 << " " ;
+        cout << "#" << t + 1 << " ";
         int N;
         cin >> N;
 
