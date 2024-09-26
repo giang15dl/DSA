@@ -7,10 +7,9 @@ class Trie {
     struct Node {
         bool isLeaf;
         int count;
-        shared_ptr<Node> parent;
         shared_ptr<Node> child[SIZE];
 
-        Node() : isLeaf(false), count(0), parent(shared_ptr<Node>()) {
+        Node() : isLeaf(false), count(0) {
             for (int i = 0; i < SIZE; i++)
                 child[i] = shared_ptr<Node>();
         }
@@ -71,6 +70,7 @@ public:
         shared_ptr<Node> node = root;
 
         for (size_t i = 0; i < word.size(); i++) {
+            node->count++;
             int index = to_integer(word[i]);
             // If word after some prefix is not present then creates new node
             if (node->child[index] == shared_ptr<Node>(nullptr))
@@ -81,6 +81,7 @@ public:
 
         // Now word is added in Trie so at leaf node for that word isWord=true
         node->isLeaf = true;
+        node->count++;
     }
 
     // Searching for word whether it is present in Trie
@@ -90,7 +91,7 @@ public:
         for (size_t i = 0; i < word.size(); i++) {
             int index = to_integer(word[i]);
             // If at any point in Trie Node for particular character is not present means nullptr then return false
-            if (node->child[index] == shared_ptr<Node>(nullptr))
+            if (node->child[index] == shared_ptr<Node>(nullptr) || node->child[index]->count == 0)
                 return false;
             node = node->child[index];
         }
@@ -100,6 +101,17 @@ public:
             return false;
 
         return true;
+    }
+
+    int countPrefix(const string &prefix) {
+        shared_ptr<Node> node = root;
+        for (size_t i = 0; i < prefix.size(); i++) {
+            int index = to_integer(prefix[i]);
+            if (node->child[index] == shared_ptr<Node>(nullptr) || node->child[index]->count == 0)
+                return 0;
+            node = node->child[index];
+        }
+        return (node->count);
     }
 
     // For ease of recursion; passing root to Partdelete
