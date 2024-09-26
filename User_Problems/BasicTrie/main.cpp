@@ -24,7 +24,7 @@ extern void Tries_deleteKey(const char *key);
 int main() {
     setbuf(stdout, NULL);
 
-    freopen("input_small.txt", "r", stdin);
+    freopen("input.txt", "r", stdin);
 
     int T;
     scanf("%d", &T);
