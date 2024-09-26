@@ -12,10 +12,7 @@ class Trie {
                 child[i] = nullptr;
         }
 
-        ~Node() {
-            for (int i = 0; i < SIZE; i++)
-                delete child[i];
-        }
+        ~Node() {}
     };
 
     Node *root;
@@ -71,7 +68,7 @@ public:
     }
 
     ~Trie() {
-        delete root;
+        clear(root);
     }
 
     int add(const char str[]) {
