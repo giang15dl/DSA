@@ -96,10 +96,10 @@ public:
         }
 
         // At the end of the word checking whether this word is really present or not
-        if (node->isLeaf == true)
-            return true;
+        if (!node->isLeaf)
+            return false;
 
-        return false;
+        return true;
     }
 
     // For ease of recursion; passing root to Partdelete
