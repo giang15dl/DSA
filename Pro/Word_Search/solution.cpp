@@ -1,5 +1,3 @@
-#include <cstdlib>
-
 class Trie {
     static const int SIZE = 'z' - 'a' + 1; // letters in the alphabet
 
@@ -26,7 +24,7 @@ class Trie {
     }
 
     void search(const char str[], Node *node, int &count, int pos = 0) {
-        if (node == NULL)
+        if (node == nullptr)
             return;
 
         if (str[pos] == 0) {
@@ -36,7 +34,7 @@ class Trie {
 
         if (str[pos] == '?') {
             for (int i = 0; i < SIZE; i++)
-                if (node->child[i] != NULL)
+                if (node->child[i] != nullptr)
                     search(str, node->child[i], count, pos + 1);
         } else {
             search(str, node->child[str[pos] - 'a'], count, pos + 1);
@@ -44,7 +42,7 @@ class Trie {
     }
 
     void remove(const char str[], Node *node, int &count, int pos = 0) {
-        if (node == NULL)
+        if (node == nullptr)
             return;
 
         if (str[pos] == 0) {
@@ -55,7 +53,7 @@ class Trie {
 
         if (str[pos] == '?') {
             for (int i = 0; i < SIZE; i++)
-                if (node->child[i] != NULL)
+                if (node->child[i] != nullptr)
                     remove(str, node->child[i], count, pos + 1);
         } else {
             remove(str, node->child[str[pos] - 'a'], count, pos + 1);
