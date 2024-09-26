@@ -90,24 +90,26 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Trie trie;
+Trie *trie;
 
 void init_trie() {
-    trie = Trie();
+    if (trie)
+        delete trie;
+    trie = new Trie();
 }
 
 void Tries_insert(const char *key) {
-    trie.insert(key);
+    trie->insert(key);
 }
 
 bool Tries_search(const char *key) {
-    return trie.find(key);
+    return trie->find(key);
 }
 
 int Tries_CountofkeysWithPrefix(const char *key) {
-    return trie.count(key);
+    return trie->count(key);
 }
 
 void Tries_deleteKey(const char *key) {
-    trie.erase(key);
+    trie->erase(key);
 }
