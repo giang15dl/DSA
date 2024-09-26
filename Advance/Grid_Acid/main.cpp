@@ -3,7 +3,8 @@
 
 const int N_MAX = 3000; // should be 3000
 const int M_MAX = 3000; // should be 3000
-const int Q_MAX = 3000000;
+const int Q_MAX = 2000000; // Runtime error: Access out of index
+//const int Q_MAX = 3000000; // Compile time error: compiler is out of heap space
 
 struct Pair {
     int i, j;
