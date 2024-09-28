@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <climits>
 
 template <typename T>
 class list {

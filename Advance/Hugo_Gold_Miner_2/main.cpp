@@ -1,6 +1,7 @@
 #include "point.hpp"
 #include "queue.hpp"
 #include <iostream>
+#include <climits>
 
 const int N = 20;
 const int G = 4;

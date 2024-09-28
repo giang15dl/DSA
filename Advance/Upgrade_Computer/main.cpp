@@ -1,4 +1,5 @@
 #include <iostream>
+#include <climits>
 
 const int N = 20;
 const int M = 30;

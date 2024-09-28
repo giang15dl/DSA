@@ -1,6 +1,7 @@
 #include "point.hpp"
 #include "queue.hpp"
 #include <iostream>
+#include <climits>
 using namespace std;
 
 const int N_MAX = 20;

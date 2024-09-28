@@ -1,6 +1,7 @@
 #include "point.hpp"
 #include "queue.hpp"
 #include <iostream>
+#include <climits>
 
 const int INF = INT_MAX;
 

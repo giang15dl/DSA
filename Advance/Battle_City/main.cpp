@@ -1,7 +1,7 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include "point.hpp"
 #include "queue.hpp"
 #include <iostream>
+#include <climits>
 
 #define INF INT_MAX
 
