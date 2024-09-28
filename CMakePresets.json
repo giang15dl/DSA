@@ -15,8 +15,33 @@
       }
     },
     {
-      "name": "release",
-      "inherits": "default",
+      "name": "ninja-debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/ninja-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "ninja-release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/ninja-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "vs-debug",
+      "generator": "Visual Studio 16 2019",
+      "binaryDir": "${sourceDir}/build/vs-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "vs-release",
+      "generator": "Visual Studio 16 2019",
+      "binaryDir": "${sourceDir}/build/vs-release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
@@ -28,8 +53,20 @@
       "configurePreset": "default"
     },
     {
-      "name": "release",
-      "configurePreset": "release"
+      "name": "ninja-debug",
+      "configurePreset": "ninja-debug"
+    },
+    {
+      "name": "ninja-release",
+      "configurePreset": "ninja-release"
+    },
+    {
+      "name": "vs-debug",
+      "configurePreset": "vs-debug"
+    },
+    {
+      "name": "vs-release",
+      "configurePreset": "vs-release"
     }
   ]
 }
