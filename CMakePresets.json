@@ -9,7 +9,7 @@
     {
       "name": "default",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/ninja-debug",
+      "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       }
@@ -17,7 +17,7 @@
     {
       "name": "ninja-debug",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/ninja-debug",
+      "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       }
@@ -25,7 +25,7 @@
     {
       "name": "ninja-release",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/ninja-release",
+      "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
@@ -33,7 +33,7 @@
     {
       "name": "msvc",
       "generator": "Visual Studio 17 2022",
-      "binaryDir": "${sourceDir}/build/msvc"
+      "binaryDir": "${sourceDir}/build"
     }
   ],
   "buildPresets": [
