@@ -1,5 +1,16 @@
 # SW Professional Level
 
+## Generate compile_commands.json for clangd lsp
+
+May need to first download clang build script from [clang power tools extension](https://github.com/Caphyon/clang-power-tools)
+
+```ps1
+curl -LO https://raw.githubusercontent.com/Caphyon/clang-power-tools/master/ClangPowerTools/ClangPowerToolsShared/Tooling/v1/clang-build.ps1
+mv clang-build.ps1 scripts/
+cd build
+.\scripts\clang-build.ps1 -export-jsondb
+```
+
 ## How to build
 
 ### Using make
